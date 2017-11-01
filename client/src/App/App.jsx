@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Button from 'material-ui/Button';
 
+import Comp from '../Comp';
+
 import logo from './logo.svg';
 import './App.css';
 
@@ -40,6 +42,8 @@ class App extends Component {
         <Button raised color="primary" onClick={this.handleClick}>
           Primary
         </Button>
+
+        <Comp />
       </div>
     );
   }
