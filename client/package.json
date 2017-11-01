@@ -10,23 +10,24 @@
     "lint": "eslint *.js src --fix && echo Lint Passed ❤"
   },
   "dependencies": {
-    "apollo-cache-inmemory": "^1.0.0",
-    "apollo-client": "^2.0.1",
-    "apollo-link-http": "^1.0.0",
-    "graphql": "^0.11.7",
-    "graphql-tag": "^2.5.0",
-    "material-ui": "^1.0.0-beta.17",
-    "prop-types": "^15.6.0",
-    "react": "^16.0.0",
-    "react-apollo": "^2.0.0",
-    "react-dom": "^16.0.0",
-    "react-scripts": "^1.0.14"
+    "apollo-cache-inmemory": "1.0.0",
+    "apollo-client": "2.0.1",
+    "apollo-link-http": "1.0.0",
+    "graphql": "0.11.7",
+    "graphql-tag": "2.5.0",
+    "material-ui": "1.0.0-beta.17",
+    "material-ui-icons": "1.0.0-beta.17",
+    "prop-types": "15.6.0",
+    "react": "16.0.0",
+    "react-apollo": "2.0.0",
+    "react-dom": "16.0.0",
+    "react-scripts": "1.0.14"
   },
   "devDependencies": {
-    "eslint": "^4.9.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-react": "^7.4.0"
+    "eslint": "4.9.0",
+    "eslint-config-airbnb": "16.1.0",
+    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-jsx-a11y": "6.0.2",
+    "eslint-plugin-react": "7.4.0"
   }
 }
