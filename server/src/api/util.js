@@ -39,7 +39,10 @@ const put = async (url, payload) => {
   return callApi(options);
 };
 
+const API_URL = DEFAULT_OPTIONS.url;
+
 export {
   get,
   put,
+  API_URL,
 };

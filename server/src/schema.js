@@ -24,6 +24,11 @@ const AssetType = new GraphQLObjectType({
   fields: () => ({
     id: { type: new GraphQLNonNull(GraphQLInt) },
     name: { type: new GraphQLNonNull(GraphQLString) },
+    url: { type: new GraphQLNonNull(GraphQLString) },
+    width: { type: new GraphQLNonNull(GraphQLInt) },
+    height: { type: new GraphQLNonNull(GraphQLInt) },
+    likes: { type: new GraphQLNonNull(GraphQLInt) },
+    // created
     personalities: { type: new GraphQLList(GraphQLString) },
     relatedAssets: {
       type: new GraphQLList(AssetType),

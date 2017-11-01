@@ -15,8 +15,11 @@ const fetchRelatedIds = async (asset) => {
   return Object.assign({}, asset, { relatedIds });
 };
 
-const fetchAssets = async (first = 10) => {
-  const data = await put(`item;number=${first}?${QUERY}`);
+const fetchAssets = async (take = 10) => {
+  // const startAt = Math.floor(Math.random() * (100 - 1)) + 1;
+  // ;first=${startAt}
+
+  const data = await put(`item;number=${take}?${QUERY}`);
   const assets = data.item.map(translateAsset);
   const relationCalls = assets.map(asset => fetchRelatedIds(asset));
   return Promise.all(relationCalls);
