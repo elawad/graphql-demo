@@ -19,16 +19,24 @@ const getFields = () => (
   Object.keys(FIELD_NAMES)
 );
 
-const cleanData = (data) => {
-  const id = data.id.replace('VX-', '');
-  const url1 = data.url.replace('/API/', '');
-  const url = `${API_URL}/${url1}`;
+const translateId = asset => (
+  asset.id.replace('VX-', '')
+);
 
-  return Object.assign({}, data, { id, url });
+const formatFields = (asset) => {
+  const id = translateId(asset);
+  let url = '';
+  if (asset.url) {
+    url = asset.url.replace('/API/', '');
+    url = `${API_URL}/${url}`;
+  }
+
+  return Object.assign({}, asset, { id, url });
 };
 
 const translateAsset = (response) => {
-  const data = {
+  const asset = {
+    // default for null fields
     likes: 0,
     personalities: [],
   };
@@ -40,10 +48,10 @@ const translateAsset = (response) => {
     const valueList = value.map(valObj => valObj.value);
     const values = MULTI_VALUE.includes(name) ? valueList : valueList[0];
     const gqlName = FIELD_NAMES[name];
-    data[gqlName] = values;
+    asset[gqlName] = values;
   });
 
-  return cleanData(data);
+  return formatFields(asset);
 };
 
 const translateRelations = (id, response) => {
@@ -59,6 +67,7 @@ const translateRelations = (id, response) => {
 };
 
 export {
+  translateId,
   translateAsset,
   translateRelations,
   getFields,

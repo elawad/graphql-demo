@@ -11,7 +11,7 @@ import {
   GraphQLSchema,
 } from 'graphql';
 
-import { fetchAssets, fetchAssetById } from './api';
+import { fetchIds, fetchAssetById } from './api';
 
 // For Caching
 const assetLoader = new DataLoader(ids => (
@@ -28,7 +28,6 @@ const AssetType = new GraphQLObjectType({
     width: { type: new GraphQLNonNull(GraphQLInt) },
     height: { type: new GraphQLNonNull(GraphQLInt) },
     likes: { type: new GraphQLNonNull(GraphQLInt) },
-    // created
     personalities: { type: new GraphQLList(GraphQLString) },
     relatedAssets: {
       type: new GraphQLList(AssetType),
@@ -43,12 +42,12 @@ const QueryType = new GraphQLObjectType({
   fields: () => ({
     allAssets: {
       type: new GraphQLList(AssetType),
-      args: { first: { type: GraphQLInt } },
+      args: {
+        first: { type: GraphQLInt },
+        skip: { type: GraphQLInt },
+      },
       resolve: (root, args) => (
-        fetchAssets(args.first).then((assets) => {
-          assets.map(asset => assetLoader.prime(asset.id, asset));
-          return assets;
-        })
+        fetchIds(args.first, args.skip).then(ids => assetLoader.loadMany(ids))
       ),
     },
     asset: {
