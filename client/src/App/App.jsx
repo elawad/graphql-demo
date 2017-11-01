@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Button from 'material-ui/Button';
 
-import Comp from '../Comp';
+import Container from '../Container';
 
 import logo from './logo.svg';
 import './App.css';
@@ -43,7 +43,8 @@ class App extends Component {
           Primary
         </Button>
 
-        <Comp />
+        <Container />
+
       </div>
     );
   }
