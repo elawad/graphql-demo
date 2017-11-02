@@ -2,14 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Card, { CardContent, CardMedia } from 'material-ui/Card';
-import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
-// import SkipPreviousIcon from 'material-ui-icons/SkipPrevious';
-// import PlayArrowIcon from 'material-ui-icons/PlayArrow';
-// import SkipNextIcon from 'material-ui-icons/SkipNext';
-import ThumbsUpIcon from 'material-ui-icons/ThumbUp';
-import ThumbsDownIcon from 'material-ui-icons/ThumbDown';
-// className={classes.playIcon}
+
+import DnVoteButton from '../Buttons/DnVoteButton';
+import UpVoteButton from '../Buttons/UpVoteButton';
 
 const styles = theme => ({
   card: {
@@ -54,12 +50,10 @@ const MediaCard = (props) => {
           </Typography>
         </CardContent>
         <div className={classes.controls}>
-          <IconButton aria-label="Previous">
-            {<ThumbsUpIcon />}
-          </IconButton>
-          <IconButton aria-label="Next">
-            {<ThumbsDownIcon />}
-          </IconButton>
+
+          <UpVoteButton id={image.id} />
+
+          <DnVoteButton id={image.id} />
         </div>
       </div>
       <CardMedia
