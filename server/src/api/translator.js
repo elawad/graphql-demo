@@ -4,8 +4,8 @@ import { API_URL } from './util';
 import { fieldMap, fieldMulti } from './data';
 
 const makeVxId = id => (`VX-${id}`);
-const translateVxId = vxId => (vxId.replace('VX-', ''));
-const translateId = asset => (translateVxId(asset.id));
+const translateVxId = id => parseInt(id.replace('VX-', ''), 10);
+const translateId = asset => translateVxId(asset.id);
 
 const formatFields = (asset) => {
   const id = translateId(asset);

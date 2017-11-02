@@ -29,11 +29,27 @@ const getSearch = (maxDate) => {
   };
 };
 
+const getMetaUpdate = (curr = 0, num = 0) => {
+  const value = parseInt(curr, 10) + parseInt(num, 10);
+
+  return {
+    timespan: [{
+      field: [{
+        name: 't_season_num',
+        value: [{ value }]
+      }],
+      start: '-INF',
+      end: '+INF'
+    }]
+  };
+};
+
 export {
   fieldMap,
   fieldMulti,
   fieldList,
   getSearch,
+  getMetaUpdate,
 };
 
 // const skipN = (skip > 0) ? `first=${skip}` : '';

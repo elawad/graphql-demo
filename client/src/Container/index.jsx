@@ -6,20 +6,20 @@ import gql from 'graphql-tag';
 import CardList from '../CardList';
 
 const QUERY = gql`query {
-  allAssets(first: 12) {
+  allImages(first: 12) {
     id, name, url, likes
   }
 }`;
 
-const Container = ({ data: { allAssets, loading, error } }) => (
+const Container = ({ data: { allImages, loading, error } }) => (
   <div>
     <p>Loading: {String(loading)}</p>
     <p>Errors: {error}</p>
 
-    {!loading && <CardList images={allAssets} />}
+    {!loading && <CardList images={allImages} />}
 
     {/*
-    allAssets.map(asset => (
+    allImages.map(asset => (
       <li key={asset.id}>
         {asset.name}
       </li>
@@ -31,7 +31,7 @@ const Container = ({ data: { allAssets, loading, error } }) => (
 
 Container.propTypes = {
   data: PropTypes.shape({
-    // allAssets: PropTypes.array,
+    // allImages: PropTypes.array,
     // loading: PropTypes.bool,
     // error: PropTypes.string,
     // refetch: PropTypes.func,

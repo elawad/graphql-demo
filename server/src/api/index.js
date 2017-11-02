@@ -1,4 +1,4 @@
-import { fieldList, getSearch } from './data';
+import { fieldList, getSearch, getMetaUpdate } from './data';
 import { get, put } from './util';
 import { translateId, translateAsset, translateRelations
 } from './translator';
@@ -14,6 +14,7 @@ const fetchRelatedIds = async (asset) => {
 
   const data = await get(`item/VX-${id}/relation`);
   const relatedIds = translateRelations(id, data);
+
   return Object.assign({}, asset, { relatedIds });
 };
 
@@ -21,8 +22,8 @@ const fetchIds = async (first, skip) => {
   const take = (first > 0) ? first : 10;
   const skipA = (skip > 0) ? `first=${skip}` : '';
   const search = getSearch();
-
   const data = await put(`item;number=${take};${skipA}`, search);
+
   return data.item.map(translateId);
 };
 
@@ -35,7 +36,20 @@ const fetchAssetById = async (id) => {
   return fetchRelatedIds(asset);
 };
 
+const sendVote = async (asset, num) => {
+  const { id, likes } = asset;
+  const metadata = getMetaUpdate(likes, num);
+
+  const data = await put(`item/VX-${id}/metadata`, metadata);
+  return translateAsset(data.item[0]);
+};
+
+const sendUpVote = async asset => sendVote(asset, +1);
+const sendDnVote = asset => sendVote(asset, -1);
+
 export {
   fetchIds,
   fetchAssetById,
+  sendUpVote,
+  sendDnVote,
 };

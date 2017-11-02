@@ -2,7 +2,7 @@ import express from 'express';
 import graphqlHTTP from 'express-graphql';
 import cors from 'cors';
 
-import GraphQLSchema from './src/schema';
+import GraphQLSchema from './src/graphql/schema';
 import { fetchAssetById } from './src/api';
 
 const MSG = 'GraphQL Server 🚀';
