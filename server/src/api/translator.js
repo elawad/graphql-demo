@@ -1,27 +1,11 @@
 import get from 'lodash/get';
 
 import { API_URL } from './util';
+import { fieldMap, fieldMulti } from './data';
 
-const FIELD_NAMES = {
-  itemId: 'id',
-  originalFilename: 'name',
-  originalHeight: 'height',
-  originalWidth: 'width',
-  created: 'createdOn',
-  representativeThumbnail: 'url',
-  t_season_num: 'likes',
-  t_personality: 'personalities',
-};
-
-const MULTI_VALUE = ['t_personality'];
-
-const getFields = () => (
-  Object.keys(FIELD_NAMES)
-);
-
-const translateId = asset => (
-  asset.id.replace('VX-', '')
-);
+const makeVxId = id => (`VX-${id}`);
+const translateVxId = vxId => (vxId.replace('VX-', ''));
+const translateId = asset => (translateVxId(asset.id));
 
 const formatFields = (asset) => {
   const id = translateId(asset);
@@ -46,8 +30,8 @@ const translateAsset = (response) => {
 
   fields.forEach(({ name, value = [] }) => {
     const valueList = value.map(valObj => valObj.value);
-    const values = MULTI_VALUE.includes(name) ? valueList : valueList[0];
-    const gqlName = FIELD_NAMES[name];
+    const values = fieldMulti.includes(name) ? valueList : valueList[0];
+    const gqlName = fieldMap[name];
     asset[gqlName] = values;
   });
 
@@ -55,20 +39,21 @@ const translateAsset = (response) => {
 };
 
 const translateRelations = (id, response) => {
-  const relations = get(response, 'relation', []);
-  const vxId = `VX-${id}`;
+  const relations = get(response, 'relation');
 
-  const data = relations
-    .filter(r => r.direction.source === vxId)
-    .map(r => r.direction.target)
-    .map(i => i.replace('VX-', ''));
+  if (!relations) return [];
 
-  return data;
+  const vxId = makeVxId(id);
+  const all = relations.filter(r => r.direction.type === 'U');
+  const source = all.filter(r => r.direction.source === vxId).map(r => r.direction.target);
+  const target = all.filter(r => r.direction.target === vxId).map(r => r.direction.source);
+  const combinedIds = source.concat(target);
+
+  return combinedIds.map(translateVxId);
 };
 
 export {
   translateId,
   translateAsset,
   translateRelations,
-  getFields,
 };

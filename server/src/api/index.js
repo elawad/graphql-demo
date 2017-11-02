@@ -1,7 +1,9 @@
+import { fieldList, getSearch } from './data';
 import { get, put } from './util';
-import { translateId, translateAsset, translateRelations, getFields } from './translator';
+import { translateId, translateAsset, translateRelations
+} from './translator';
 
-const FIELDS = getFields().join();
+const FIELDS = fieldList.join();
 const QUERY = `content=metadata&field=${FIELDS}`;
 
 const fetchRelatedIds = async (asset) => {
@@ -15,25 +17,13 @@ const fetchRelatedIds = async (asset) => {
   return Object.assign({}, asset, { relatedIds });
 };
 
-const fetchIds = async (first) => {
+const fetchIds = async (first, skip) => {
   const take = (first > 0) ? first : 10;
-  // const skipN = (skip > 0) ? `first=${skip}` : '';
-  // ;${skipN}
+  const skipA = (skip > 0) ? `first=${skip}` : '';
+  const search = getSearch();
 
-  const maxDate = '2017-06-20T15:44:40';
-  const search = { field: [{ name: 'created', range: [{ value: [{ minimum: true }, { value: maxDate }] }] }] };
-
-  const data = await put(`item;number=${take}`, search);
+  const data = await put(`item;number=${take};${skipA}`, search);
   return data.item.map(translateId);
-};
-const fetchAssets = async (take = 10) => {
-  const maxDate = '2017-06-20T15:44:40';
-  const search = { field: [{ name: 'created', range: [{ value: [{ minimum: true }, { value: maxDate }] }] }] };
-
-  const data = await put(`item;number=${take}?${QUERY}`, search);
-  const assets = data.item.map(translateAsset);
-  const relationCalls = assets.map(asset => fetchRelatedIds(asset));
-  return Promise.all(relationCalls);
 };
 
 const fetchAssetById = async (id) => {
@@ -41,11 +31,11 @@ const fetchAssetById = async (id) => {
 
   const data = await get(`item/VX-${id}?${QUERY}`);
   const asset = translateAsset(data);
+
   return fetchRelatedIds(asset);
 };
 
 export {
   fetchIds,
-  fetchAssets,
   fetchAssetById,
 };
