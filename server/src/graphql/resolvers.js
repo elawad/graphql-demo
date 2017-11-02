@@ -28,7 +28,7 @@ const image = (root, { id }) => (
   assetLoader.load(id)
 );
 
-const upVote = (roots, { id }) => (
+const upVote = (root, { id }) => (
   assetLoader.load(id).then(sendUpVote).then(updateCache)
 );
 

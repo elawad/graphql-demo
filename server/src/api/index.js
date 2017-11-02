@@ -41,10 +41,15 @@ const sendVote = async (asset, num) => {
   const metadata = getMetaUpdate(likes, num);
 
   const data = await put(`item/VX-${id}/metadata`, metadata);
-  return translateAsset(data.item[0]);
+  const assetNew = translateAsset(data.item[0]);
+
+  // update likes
+  return Object.assign({}, asset, {
+    likes: assetNew.likes,
+  });
 };
 
-const sendUpVote = async asset => sendVote(asset, +1);
+const sendUpVote = asset => sendVote(asset, +1);
 const sendDnVote = asset => sendVote(asset, -1);
 
 export {

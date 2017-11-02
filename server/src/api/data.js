@@ -30,7 +30,8 @@ const getSearch = (maxDate) => {
 };
 
 const getMetaUpdate = (curr = 0, num = 0) => {
-  const value = parseInt(curr, 10) + parseInt(num, 10);
+  let value = parseInt(curr, 10) + parseInt(num, 10);
+  if (value < 0) value = 0;
 
   return {
     timespan: [{
