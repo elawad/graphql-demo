@@ -4,39 +4,52 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import IconButton from 'material-ui/IconButton';
-// import SkipPreviousIcon from 'material-ui-icons/SkipPrevious';
-// import PlayArrowIcon from 'material-ui-icons/PlayArrow';
-// import SkipNextIcon from 'material-ui-icons/SkipNext';
 import ThumbsUpIcon from 'material-ui-icons/ThumbUp';
 
-class NewEntry extends Component {
+class VoteButton extends Component {
   constructor(props) {
     super(props);
+    this.state = { isLoading: false };
     this.onClick = this.onClick.bind(this);
   }
 
-  onClick() {
-    const { id, mutate } = this.props;
+  async onClick() {
+    const { id, likes, mutate } = this.props;
 
-    mutate({ variables: { id } });
+    this.setState({ isLoading: true });
+
+    await mutate({
+      variables: { id },
+      optimisticResponse: {
+        // __typename: 'Mutation',
+        upVote: {
+          __typename: 'Image',
+          id,
+          likes: likes + 1,
+        }
+      }
+    });
+
+    this.setState({ isLoading: false });
   }
 
   render() {
+    const { isLoading } = this.state;
     return (
-      <IconButton onClick={this.onClick} aria-label="Like">
+      <IconButton onClick={this.onClick} disabled={isLoading} aria-label="Like">
         {<ThumbsUpIcon />}
       </IconButton>
     );
   }
 }
 
-NewEntry.propTypes = {
+VoteButton.propTypes = {
   mutate: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
-  // isUpVote: PropTypes.bool.isRequired,
+  likes: PropTypes.number.isRequired,
 };
 
-const submitRepository = gql`
+const upVoteImage = gql`
   mutation ($id: Int!) {
     upVote(id: $id) {
       id
@@ -45,6 +58,6 @@ const submitRepository = gql`
   }
 `;
 
-const NewEntryWithData = graphql(submitRepository)(NewEntry);
+const ButtonWithData = graphql(upVoteImage)(VoteButton);
 
-export default NewEntryWithData;
+export default ButtonWithData;

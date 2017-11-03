@@ -43,19 +43,21 @@ const MediaCard = (props) => {
   return (
     <Card className={classes.card}>
       <div className={classes.details}>
+
         <CardContent className={classes.content}>
           <Typography type="headline">{image.id}</Typography>
           <Typography type="subheading" color="secondary">
             {image.likes} Likes
           </Typography>
         </CardContent>
+
         <div className={classes.controls}>
-
-          <UpVoteButton id={image.id} />
-
-          <DnVoteButton id={image.id} />
+          <UpVoteButton id={image.id} likes={image.likes} />
+          <DnVoteButton id={image.id} likes={image.likes} />
         </div>
+
       </div>
+
       <CardMedia
         className={classes.cover}
         image={image.url}
@@ -78,6 +80,3 @@ MediaCard.propTypes = {
 const CardWithStyle = withStyles(styles, { withTheme: true })(MediaCard);
 
 export default CardWithStyle;
-
-// image="https://material-ui-next.com/static/images/cards/live-from-space.jpg"
-// title="Live from space album cover"
