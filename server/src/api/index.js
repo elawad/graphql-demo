@@ -12,7 +12,7 @@ const fetchRelatedIds = async (asset) => {
   const { id } = asset;
   if (!id) return asset;
 
-  const data = await get(`item/VX-${id}/relation`);
+  const data = await get(`item/VX-${id}/relation?direction=U`);
   const relatedIds = translateRelations(id, data);
 
   return Object.assign({}, asset, { relatedIds });
@@ -22,6 +22,7 @@ const fetchIds = async (first, skip) => {
   const take = (first > 0) ? first : 10;
   const skipA = (skip > 0) ? `first=${skip}` : '';
   const search = getSearch();
+
   const data = await put(`item;number=${take};${skipA}`, search);
 
   return data.item.map(translateId);

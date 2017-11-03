@@ -15,7 +15,7 @@ app.use('/graphql', cors(), graphqlHTTP({
 }));
 
 app.get('/', async (req, res) => {
-  const meta = await fetchAssetById(40811); // 40811 // 1000111
+  const meta = await fetchAssetById(36737); // 36737 // 1000111
   const data = JSON.stringify(meta, null, 4);
   res.send(`${MSG} <br/><br/> <pre>${data}</pre>`);
 });

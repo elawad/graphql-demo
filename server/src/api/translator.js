@@ -3,7 +3,6 @@ import get from 'lodash/get';
 import { API_URL } from './util';
 import { fieldMap, fieldMulti } from './data';
 
-const makeVxId = id => (`VX-${id}`);
 const translateVxId = id => parseInt(id.replace('VX-', ''), 10);
 const translateId = asset => translateVxId(asset.id);
 
@@ -40,14 +39,18 @@ const translateAsset = (response) => {
 
 const translateRelations = (id, response) => {
   const relations = get(response, 'relation');
-
   if (!relations) return [];
 
-  const vxId = makeVxId(id);
-  const all = relations.filter(r => r.direction.type === 'U');
-  const source = all.filter(r => r.direction.source === vxId).map(r => r.direction.target);
-  const target = all.filter(r => r.direction.target === vxId).map(r => r.direction.source);
-  const combinedIds = source.concat(target);
+  const vxId = `VX-${id}`;
+
+  const combinedIds = relations.reduce((ids, relation) => {
+    const { source, target } = relation.direction;
+
+    if (vxId === source) ids.push(target);
+    else if (vxId === target) ids.push(source);
+
+    return ids;
+  }, []);
 
   return combinedIds.map(translateVxId);
 };

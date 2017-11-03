@@ -36,7 +36,7 @@ const downVote = (root, { id }) => (
   assetLoader.load(id).then(sendDnVote).then(updateCache)
 );
 
-module.exports = {
+export {
   allImages,
   relatedImages,
   image,

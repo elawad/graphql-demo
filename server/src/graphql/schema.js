@@ -1,10 +1,6 @@
 import {
-  GraphQLInt,
-  GraphQLString,
-  GraphQLList,
-  GraphQLObjectType,
-  GraphQLNonNull,
-  GraphQLSchema,
+  GraphQLInt, GraphQLString, GraphQLList,
+  GraphQLObjectType, GraphQLNonNull, GraphQLSchema,
 } from 'graphql';
 
 import {
@@ -71,4 +67,4 @@ const Schema = new GraphQLSchema({
   mutation: MutationType,
 });
 
-module.exports = Schema;
+export default Schema;
