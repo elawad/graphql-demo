@@ -1,4 +1,4 @@
-import get from 'lodash/get';
+import get from 'lodash.get';
 
 import { API_URL } from './util';
 import { fieldMap, fieldMulti } from './data';

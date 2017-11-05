@@ -35,9 +35,9 @@ const typeDefs = `
   }
 
   # schema subscription:
-  #type Subscription {
-  #  voteChanged: Image
-  #}
+  type Subscription {
+    voteChanged(id: Int): Image
+  }
 `;
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });

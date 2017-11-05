@@ -1,25 +1,38 @@
+import { PubSub /* , withFilter */ } from 'graphql-subscriptions';
+
 import { createImages, createPersons, createImage } from '../api-img';
 
-let Images = createImages();
-const Persons = createPersons();
+const pubsub = new PubSub();
+let Images;
+let Persons;
+
+(async () => {
+  Images = await createImages();
+  Persons = await createPersons();
+  console.log('\nImages Ready.');
+})();
 
 const resolvers = {
   Image: {
-    persons: image => Persons.filter(p => p.imageId === image.id),
+    persons: i => Persons.filter(p => p.imageId === i.id)
   },
+
   Person: {
-    image: person => Images.find(i => i.id === person.imageId),
+    image: p => Images.find(i => i.id === p.imageId)
   },
 
   Query: {
-    images: async () => {
-      Images = await createImages();
-      return Images;
-    },
-    image: async (root, { id }) => {
-      Images = await createImages();
-      return Images.find(i => i.id === id);
-    },
+    images: () => Images,
+    // images: async () => {
+    //   Images = await createImages();
+    //   return Images;
+    // },
+
+    image: (root, { id }) => Images.find(i => i.id === id),
+    // image: async (root, { id }) => {
+    //   Images = await createImages();
+    //   return Images.find(i => i.id === id);
+    // },
 
     persons: () => Persons,
     person: (root, { id }) => Persons.find(p => p.id === id),
@@ -28,7 +41,7 @@ const resolvers = {
   Mutation: {
     addImage: async (root, { name }) => {
       const image = await createImage(name);
-      await Images.push(image);
+      Images.push(image);
       return image;
     },
     upVote: (root, { id }) => {
@@ -36,6 +49,9 @@ const resolvers = {
       const image = Images[index];
       image.likes += 1;
       Images[index] = image;
+
+      pubsub.publish('voteChanged', { voteChanged: image, id: image.id });
+
       return image;
     },
     downVote: (root, { id }) => {
@@ -45,6 +61,20 @@ const resolvers = {
       Images[index] = image;
       return image;
     },
+  },
+
+  Subscription: {
+    voteChanged: {
+      subscribe: () => pubsub.asyncIterator('voteChanged'),
+      // To Filter by id:
+      // subscribe: withFilter(
+      //   () => pubsub.asyncIterator('voteChanged'),
+      //   (payload, variables) => {
+      //     if (!variables.id) return true;
+      //     return (payload.id === variables.id);
+      //   }
+      // ),
+    }
   },
 };
 
