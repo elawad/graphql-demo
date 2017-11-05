@@ -1,33 +1,32 @@
 import express from 'express';
-import graphqlHTTP from 'express-graphql';
+import bodyParser from 'body-parser';
 import cors from 'cors';
+import { graphql } from 'graphql';
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 
-import GraphQLSchema from './src/graphql/schema';
-import { fetchAssetById } from './src/api';
+import graphQLSchema from './src/graphql-img/schema';
 
 const MSG = 'GraphQL Server 🚀';
 const PORT = 4000;
 const app = express();
 
-app.use('/graphql', cors(), graphqlHTTP({
-  schema: GraphQLSchema,
-  graphiql: true,
+app.use('/graphql', cors(), bodyParser.json(), graphqlExpress({
+  schema: graphQLSchema,
+}));
+
+app.get('/graphiql', graphiqlExpress({
+  endpointURL: '/graphql'
 }));
 
 app.get('/', async (req, res) => {
-  const meta = await fetchAssetById(36737); // 36737 // 1000111
+  const query = '{ image(id: 2) { name likes url } }';
+  const meta = await graphql(graphQLSchema, query);
   const data = JSON.stringify(meta, null, 4);
+
   res.send(`${MSG} <br/><br/> <pre>${data}</pre>`);
 });
 
-app.listen(PORT, () => (
-  console.log(`${MSG}\nhttp://localhost:${PORT}`)
-));
-
-
-// const root = {
-//   postTitle: () => 'Build a Simple GraphQL Server With Express and NodeJS',
-//   blogTitle: () => 'scotch.io'
-// };
-// rootValue: root,
-// graphiql: true,
+app.listen(PORT, () => {
+  const URL = `http://localhost:${PORT}`;
+  console.log(`${MSG}\nAPI: ${URL}\nGQL: ${URL}/graphiql`);
+});

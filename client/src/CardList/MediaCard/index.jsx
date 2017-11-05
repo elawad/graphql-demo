@@ -22,8 +22,8 @@ const styles = theme => ({
     minWidth: '8em',
   },
   cover: {
-    width: 151,
-    height: 151,
+    width: 150,
+    height: 150,
   },
   controls: {
     display: 'flex',
@@ -45,7 +45,7 @@ const MediaCard = (props) => {
       <div className={classes.details}>
 
         <CardContent className={classes.content}>
-          <Typography type="headline">{image.id}</Typography>
+          <Typography type="headline">{image.name}</Typography>
           <Typography type="subheading" color="secondary">
             {image.likes} Likes
           </Typography>
