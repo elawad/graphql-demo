@@ -1,43 +1,70 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import CardList from '../CardList';
 
-const QUERY = gql`query {
+// Query all images
+const IMAGE_QUERY = gql`
+query {
   images {
-    id, name, url, likes
+    id likes name url
   }
 }`;
 
-const Container = ({ data: { images, loading, error } }) => (
-  <div>
-    <p>Loading: {String(loading)}</p>
-    <p>Errors: {error}</p>
+// Subscription to vote changes
+const VOTE_SUBSCRIPTION = gql`
+subscription {
+  voteChanged {
+    id likes
+  }
+}`;
 
-    {!loading && <CardList images={images} />}
+class Container extends Component {
+  componentWillMount() {
+    const { data: { subscribeToMore } } = this.props;
 
-    {/*
-    images.map(asset => (
-      <li key={asset.id}>
-        {asset.name}
-      </li>
-    ))}
-    */}
+    subscribeToMore({
+      document: VOTE_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.voteChanged) return prev;
 
-  </div>
-);
+        // Find/update image with new votes
+        const newVote = subscriptionData.voteChanged;
+        const { likes, id } = newVote;
+        const images = [...prev.images];
+        const i = images.findIndex(image => image.id === id);
+        const image = Object.assign({}, images[i], { likes });
+        images[i] = image;
+
+        return Object.assign({}, prev, { images });
+      }
+    });
+  }
+
+  render() {
+    const { data: { images, loading } } = this.props;
+
+    return (
+      <div>
+        <p>Loading: {String(loading)}</p>
+        {!loading && <CardList images={images} />}
+      </div>
+    );
+  }
+}
 
 Container.propTypes = {
   data: PropTypes.shape({
-    // allImages: PropTypes.array,
+    // images: PropTypes.array,
     // loading: PropTypes.bool,
     // error: PropTypes.string,
     // refetch: PropTypes.func,
+    // subscribeToMore: PropTypes.func,
   }).isRequired,
 };
 
-const ContainerWithData = graphql(QUERY)(Container);
+const ContainerWithData = graphql(IMAGE_QUERY)(Container);
 
 export default ContainerWithData;

@@ -51,7 +51,6 @@ const resolvers = {
       Images[index] = image;
 
       pubsub.publish('voteChanged', { voteChanged: image, id: image.id });
-
       return image;
     },
     downVote: (root, { id }) => {
@@ -59,6 +58,8 @@ const resolvers = {
       const image = Images[index];
       image.likes = (image.likes <= 0) ? 0 : image.likes - 1;
       Images[index] = image;
+
+      pubsub.publish('voteChanged', { voteChanged: image, id: image.id });
       return image;
     },
   },
