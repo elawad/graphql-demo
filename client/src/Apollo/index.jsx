@@ -9,14 +9,18 @@ import { getMainDefinition } from 'apollo-utilities';
 
 import App from '../App/App';
 
+const PORT = 4000;
+const HOST = 'localhost';
+// const HOST = '192.168.1.100';
+
 // Create an http link:
 const httpLink = new HttpLink({
-  uri: 'http://localhost:4000/graphql'
+  uri: `http://${HOST}:${PORT}/graphql`
 });
 
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-  uri: 'ws://localhost:4000/subscriptions',
+  uri: `ws://${HOST}:${PORT}/subscriptions`,
   options: {
     reconnect: true,
     reconnectionAttempts: 10,

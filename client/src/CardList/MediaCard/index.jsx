@@ -12,6 +12,10 @@ const styles = theme => ({
     display: 'flex',
     marginTop: theme.spacing.unit * 2,
     marginLeft: theme.spacing.unit * 2,
+
+    // [theme.breakpoints.down('sm')]: {
+    //   width: '100%', // theme.typography.fontSize + 4,
+    // },
   },
   details: {
     display: 'flex',

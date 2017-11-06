@@ -23,16 +23,7 @@ const resolvers = {
 
   Query: {
     images: () => Images,
-    // images: async () => {
-    //   Images = await createImages();
-    //   return Images;
-    // },
-
     image: (root, { id }) => Images.find(i => i.id === id),
-    // image: async (root, { id }) => {
-    //   Images = await createImages();
-    //   return Images.find(i => i.id === id);
-    // },
 
     persons: () => Persons,
     person: (root, { id }) => Persons.find(p => p.id === id),
