@@ -17,7 +17,10 @@ const httpLink = new HttpLink({
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
   uri: 'ws://localhost:4000/subscriptions',
-  options: { reconnect: true }
+  options: {
+    reconnect: true,
+    reconnectionAttempts: 10,
+  }
 });
 
 // Split based on operation type:
