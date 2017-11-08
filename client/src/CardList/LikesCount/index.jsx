@@ -24,7 +24,7 @@ class LikesCount extends PureComponent {
       <AnimateOnChange
         baseClassName="Likes"
         animationClassName={`Likes--bounce${type}`}
-        animate
+        animate={diff !== 0}
       >
         {likes} Likes
       </AnimateOnChange>

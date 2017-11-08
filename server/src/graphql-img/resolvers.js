@@ -1,6 +1,6 @@
 import { PubSub /* , withFilter */ } from 'graphql-subscriptions';
 
-import { createImages, createPersons, createImage } from '../api-img';
+import { createImages, createPersons, createImage, voteImage } from '../api-img';
 
 const pubsub = new PubSub();
 let Images;
@@ -9,7 +9,7 @@ let Persons;
 (async () => {
   Images = await createImages();
   Persons = await createPersons();
-  console.log('\nImages Ready.');
+  console.log('Ready.');
 })();
 
 const resolvers = {
@@ -32,23 +32,18 @@ const resolvers = {
   Mutation: {
     addImage: async (root, { name }) => {
       const image = await createImage(name);
+
       Images.push(image);
       return image;
     },
-    upVote: (root, { id }) => {
-      const index = Images.findIndex(i => i.id === id);
-      const image = Images[index];
-      image.likes += 1;
-      Images[index] = image;
+    upVote: async (root, { id }) => {
+      const image = await voteImage(id, +1);
 
       pubsub.publish('voteChanged', { voteChanged: image, id: image.id });
       return image;
     },
-    downVote: (root, { id }) => {
-      const index = Images.findIndex(i => i.id === id);
-      const image = Images[index];
-      image.likes = (image.likes <= 0) ? 0 : image.likes - 1;
-      Images[index] = image;
+    downVote: async (root, { id }) => {
+      const image = await voteImage(id, -1);
 
       pubsub.publish('voteChanged', { voteChanged: image, id: image.id });
       return image;

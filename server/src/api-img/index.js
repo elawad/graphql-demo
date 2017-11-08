@@ -62,8 +62,22 @@ const createPersons = () => {
   return allPersons;
 };
 
+const voteImage = async (id, vote = +1) => {
+  // synthetic delay
+  await new Promise(resolve => setTimeout(resolve, 150));
+
+  const index = allImages.findIndex(i => i.id === id);
+  const image = allImages[index];
+  const likes = image.likes + vote;
+  image.likes = (likes > 0) ? likes : 0;
+  allImages[index] = image;
+
+  return image;
+};
+
 export {
   createImage,
   createImages,
   createPersons,
+  voteImage,
 };

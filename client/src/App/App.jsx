@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Button from 'material-ui/Button';
+// import Button from 'material-ui/Button';
 
 import Container from '../Container';
 
@@ -24,24 +24,25 @@ class App extends Component {
   }
 
   render() {
-    const { selectedValue } = this.state;
+    // const { selectedValue } = this.state;
 
     return (
       <div className="App">
+
         <div className="App-header">
-
           <img src={logo} className="App-logo" alt="logo" />
-
           <h2>GraphQL Demo</h2>
         </div>
 
-        <p className="App-intro">
-          Totals { selectedValue }
-        </p>
-
-        <Button raised color="primary" onClick={this.handleClick}>
-          Primary
-        </Button>
+        {/*
+        // <p className="App-intro">
+        //   Totals { selectedValue }
+        // </p>
+        //
+        // <Button raised color="primary" onClick={this.handleClick}>
+        //   Primary
+        // </Button>
+        */}
 
         <Container />
 
