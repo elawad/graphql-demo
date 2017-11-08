@@ -6,6 +6,7 @@ import Typography from 'material-ui/Typography';
 
 import DnVoteButton from '../Buttons/DnVoteButton';
 import UpVoteButton from '../Buttons/UpVoteButton';
+import LikesCount from '../LikesCount';
 
 const styles = theme => ({
   card: {
@@ -43,29 +44,32 @@ const styles = theme => ({
 
 const MediaCard = (props) => {
   const { classes, image } = props;
+  const {
+    id, name, url, likes
+  } = image;
 
   return (
     <Card className={classes.card}>
       <div className={classes.details}>
 
         <CardContent className={classes.content}>
-          <Typography type="headline">{image.name}</Typography>
+          <Typography type="headline">{name}</Typography>
           <Typography type="subheading" color="secondary">
-            {image.likes} Likes
+            <LikesCount likes={likes} />
           </Typography>
         </CardContent>
 
         <div className={classes.controls}>
-          <UpVoteButton id={image.id} likes={image.likes} />
-          <DnVoteButton id={image.id} likes={image.likes} />
+          <UpVoteButton id={id} likes={likes} />
+          <DnVoteButton id={id} likes={likes} />
         </div>
 
       </div>
 
       <CardMedia
         className={classes.cover}
-        image={image.url}
-        title={image.name}
+        image={url}
+        title={name}
       />
     </Card>
   );
@@ -78,6 +82,7 @@ MediaCard.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
+    likes: PropTypes.number.isRequired,
   }).isRequired,
 };
 

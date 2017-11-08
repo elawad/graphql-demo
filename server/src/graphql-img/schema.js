@@ -2,7 +2,7 @@ import { makeExecutableSchema } from 'graphql-tools';
 
 import resolvers from './resolvers';
 
-const typeDefs = `
+const typeDefs = /* GraphQL */`
   # schema data type:
   type Image {
     id: Int!

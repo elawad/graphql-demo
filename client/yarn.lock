@@ -5497,6 +5497,10 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-animate-on-change@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-animate-on-change/-/react-animate-on-change-1.0.1.tgz#fb6f14e50132b1b0d12abe6e5426794b69dea5e4"
+
 react-apollo@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-2.0.0.tgz#c9cbda2956585d422800f1686d870258637170f8"
