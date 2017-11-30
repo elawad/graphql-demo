@@ -26,7 +26,7 @@ server.get('/', async (req, res) => {
   const meta = await graphql(graphQLSchema, query);
   const data = JSON.stringify(meta, null, 4);
 
-  res.send(`${MSG} <br/><br/> <pre>${data}</pre>`);
+  res.send(`${MSG} <br/><br/> <pre style='overflow:hidden'>${data}</pre>`);
 });
 
 // Wrap the Express server
