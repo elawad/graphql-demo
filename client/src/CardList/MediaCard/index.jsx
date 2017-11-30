@@ -51,6 +51,9 @@ const styles = theme => ({
     color: 'white',
     textShadow: '1px 1px 1px rgb(1,1,1)',
     letterSpacing: '1px',
+    backgroundColor: '#0000002e',
+    paddingLeft: theme.spacing.unit / 2,
+    paddingRight: theme.spacing.unit / 2,
   },
   // playIcon: {
   //   height: 38,
