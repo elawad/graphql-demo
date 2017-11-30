@@ -10,6 +10,9 @@ const IMAGE_QUERY = gql`
 query {
   images {
     id likes name url
+    # author {
+    #   firstName lastName
+    # }
   }
 }`;
 

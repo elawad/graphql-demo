@@ -9,7 +9,9 @@ const style = {
   justifyContent: 'space-evenly',
   WebkitJustifyContent: 'space-around',
   textAlign: 'initial',
-  padding: '0 8px 16px 0',
+  padding: '8px 16px 16px 8px',
+  maxWidth: '80em',
+  margin: '0 auto',
 };
 
 const CardList = ({ images }) => (

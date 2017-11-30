@@ -9,14 +9,11 @@ import ThumbsDownIcon from 'material-ui-icons/ThumbDown';
 class VoteButton extends Component {
   constructor(props) {
     super(props);
-    this.state = { isLoading: false };
     this.onClick = this.onClick.bind(this);
   }
 
   async onClick() {
     const { id, likes, mutate } = this.props;
-
-    this.setState({ isLoading: true });
 
     await mutate({
       variables: { id },
@@ -28,15 +25,11 @@ class VoteButton extends Component {
         }
       }
     });
-
-    this.setState({ isLoading: false });
   }
 
   render() {
-    const { isLoading } = this.state;
-
     return (
-      <IconButton onClick={this.onClick} disabled={isLoading} aria-label="Dislike">
+      <IconButton onClick={this.onClick} aria-label="Dislike">
         {<ThumbsDownIcon />}
       </IconButton>
     );

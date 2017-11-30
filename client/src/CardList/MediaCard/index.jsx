@@ -28,8 +28,8 @@ const styles = theme => ({
     minWidth: '8em',
   },
   cover: {
-    width: 150,
-    height: 150,
+    width: 225,
+    minHeight: 150,
   },
   controls: {
     display: 'flex',
@@ -37,16 +37,20 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit,
     paddingBottom: theme.spacing.unit,
   },
-  playIcon: {
-    height: 38,
-    width: 38,
+  creator: {
+    minHeight: '1.8em',
   },
+  // playIcon: {
+  //   height: 38,
+  //   width: 38,
+  // },
 });
 
 const MediaCard = (props) => {
   const { classes, image } = props;
   const {
-    id, name, url, likes
+    id, name, url, likes,
+    // author
   } = image;
 
   return (
@@ -55,6 +59,14 @@ const MediaCard = (props) => {
 
         <CardContent className={classes.content}>
           <Typography type="headline">{name}</Typography>
+
+          {/* {author && (
+          <Typography type="caption" color="secondary" className={classes.creator}>
+            {author.firstName[0]}. {author.lastName}
+          </Typography>)
+          } */}
+
+
           <Typography type="subheading" color="secondary">
             <LikesCount likes={likes} />
           </Typography>

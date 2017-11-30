@@ -22,8 +22,8 @@
 @keyframes Likes-keyframes--bounce--down {
   0%,to { transform: rotate(0) }
   10% { transform: scale(1.2) }
-  40% { transform: rotate(4deg) translateY(-2) }
-  50% { transform: rotate(0deg) translateY(4px) }
-  60% { transform: rotate(8deg) translateY(8px) }
+  40% { transform: rotate(-4deg) translateY(-2) }
+  50% { transform: rotate(0deg) translateY(8px) }
+  60% { transform: rotate(-8deg) translateY(4px) }
   80% { transform: rotate(0deg) translateY(0) }
 }
