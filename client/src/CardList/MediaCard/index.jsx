@@ -38,6 +38,12 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit,
     paddingBottom: theme.spacing.unit,
   },
+  title: {
+    maxWidth: '5.25em',
+    textOverflow: 'ellipsis',
+    overflowX: 'hidden',
+    whiteSpace: 'nowrap',
+  },
   creator: {
     position: 'absolute',
     right: theme.spacing.unit,
@@ -64,7 +70,7 @@ const MediaCard = (props) => {
       <div className={classes.details}>
 
         <CardContent className={classes.content}>
-          <Typography type="headline">{name}</Typography>
+          <Typography type="headline" className={classes.title}>{name}</Typography>
 
           <Typography type="subheading" color="secondary">
             <LikesCount likes={likes} />

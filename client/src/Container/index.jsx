@@ -16,11 +16,17 @@ query {
   }
 }`;
 
-// Subscription to vote changes
+// Subscriptions
 const VOTE_SUBSCRIPTION = gql`
 subscription {
   voteChanged {
     id likes
+  }
+}`;
+const CREATE_SUBSCRIPTION = gql`
+subscription {
+  imageCreated {
+    id likes name url
   }
 }`;
 
@@ -40,7 +46,18 @@ class Container extends Component {
         const i = images.findIndex(image => image.id === id);
         const image = { ...images[i], likes };
         images[i] = image;
+        return { ...prev, images };
+      }
+    });
 
+    subscribeToMore({
+      document: CREATE_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.imageCreated) return prev;
+
+        // Add new image
+        const image = subscriptionData.imageCreated;
+        const images = [image, ...prev.images];
         return { ...prev, images };
       }
     });

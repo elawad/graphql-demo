@@ -28,7 +28,7 @@ const createImage = async (name) => {
   const image = getData(id, name);
   const url = await fetchUrl(id);
   image.url = url;
-  allImages[id] = image;
+  allImages.unshift(image);
 
   return image;
 };

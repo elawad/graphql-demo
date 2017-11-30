@@ -22,7 +22,8 @@ const resolvers = {
   },
 
   Query: {
-    images: () => Images,
+    images: () => Images.sort((a, b) => b.id - a.id),
+
     image: (root, { id }) => Images.find(i => i.id === id),
 
     authors: () => Authors,
@@ -32,6 +33,7 @@ const resolvers = {
   Mutation: {
     addImage: async (root, { name }) => {
       const image = await createImage(name);
+      pubsub.publish('imageCreated', { imageCreated: image, id: image.id });
       return image;
     },
     upVote: async (root, { id }) => {
@@ -57,6 +59,9 @@ const resolvers = {
       //     return (payload.id === variables.id);
       //   }
       // ),
+    },
+    imageCreated: {
+      subscribe: () => pubsub.asyncIterator('imageCreated'),
     }
   },
 };

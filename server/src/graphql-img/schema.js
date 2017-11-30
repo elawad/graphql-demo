@@ -47,6 +47,8 @@ const typeDefs = /* GraphQL */`
   type Subscription {
     # An image's like count was changed
     voteChanged(id: Int): Image
+    # An image was added
+    imageCreated(id: Int): Image
   }
 `;
 
