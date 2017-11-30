@@ -38,10 +38,10 @@ class Container extends Component {
         const { likes, id } = newVote;
         const images = [...prev.images];
         const i = images.findIndex(image => image.id === id);
-        const image = Object.assign({}, images[i], { likes });
+        const image = { ...images[i], likes };
         images[i] = image;
 
-        return Object.assign({}, prev, { images });
+        return { ...prev, images };
       }
     });
   }
@@ -57,11 +57,12 @@ class Container extends Component {
 
 Container.propTypes = {
   data: PropTypes.shape({
-    // images: PropTypes.array,
-    // loading: PropTypes.bool,
+    images: PropTypes.array,
+    loading: PropTypes.bool,
+    subscribeToMore: PropTypes.func,
+
     // error: PropTypes.string,
     // refetch: PropTypes.func,
-    // subscribeToMore: PropTypes.func,
   }).isRequired,
 };
 

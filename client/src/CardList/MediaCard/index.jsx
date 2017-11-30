@@ -14,6 +14,7 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 2,
     marginLeft: theme.spacing.unit * 1,
     justifyContent: 'space-between',
+    position: 'relative',
 
     [theme.breakpoints.down('sm')]: {
       width: '100%', // theme.typography.fontSize + 4,
@@ -38,7 +39,12 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit,
   },
   creator: {
-    minHeight: '1.8em',
+    position: 'absolute',
+    right: theme.spacing.unit,
+    bottom: theme.spacing.unit,
+    color: 'white',
+    textShadow: '1px 1px 1px rgb(1,1,1)',
+    letterSpacing: '1px',
   },
   // playIcon: {
   //   height: 38,
@@ -50,7 +56,7 @@ const MediaCard = (props) => {
   const { classes, image } = props;
   const {
     id, name, url, likes,
-    // author
+    author
   } = image;
 
   return (
@@ -59,13 +65,6 @@ const MediaCard = (props) => {
 
         <CardContent className={classes.content}>
           <Typography type="headline">{name}</Typography>
-
-          {/* {author && (
-          <Typography type="caption" color="secondary" className={classes.creator}>
-            {author.firstName[0]}. {author.lastName}
-          </Typography>)
-          } */}
-
 
           <Typography type="subheading" color="secondary">
             <LikesCount likes={likes} />
@@ -84,6 +83,11 @@ const MediaCard = (props) => {
         image={url}
         title={name}
       />
+      {author && (
+      <Typography type="caption" color="secondary" className={classes.creator}>
+        {author.firstName[0]}. {author.lastName}
+      </Typography>)
+      }
     </Card>
   );
 };
