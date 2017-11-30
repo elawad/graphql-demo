@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const collections = [203782, 261936, 482366, 578066, 885319];
-const sizes = ['150x150', '200x200', '250x250', '300x300'];
+const sizes = ['225x150', '240x160', '255x170', '270x180'];
+let allImages = [];
+let allAuthors = [];
 let nextId = 0;
 
 const fetchUrl = async (id) => {
@@ -17,6 +19,7 @@ const getData = (id, name) => ({
   id,
   name: name ? `${name}` : `Image ${id}`,
   likes: Math.floor(Math.random() * 4),
+  authorId: (id % 4 === 0) ? null : Math.ceil(Math.random() * 3),
 });
 
 const createImage = async (name) => {
@@ -25,12 +28,12 @@ const createImage = async (name) => {
   const image = getData(id, name);
   const url = await fetchUrl(id);
   image.url = url;
+  allImages[id] = image;
 
   return image;
 };
 
-let allImages = [];
-const createImages = async (num = 12) => {
+const getImages = async (num = 12) => {
   if (allImages.length > 0) return allImages;
 
   const ids = Array(num).fill().map(() => {
@@ -49,17 +52,16 @@ const createImages = async (num = 12) => {
   return allImages;
 };
 
-let allPersons = [];
-const createPersons = () => {
-  if (allPersons.length > 0) return allPersons;
+const getAuthors = () => {
+  if (allAuthors.length > 0) return allAuthors;
 
-  allPersons = [
-    { id: 1, name: 'Person A', imageId: 4 },
-    { id: 2, name: 'Person B', imageId: 1 },
-    { id: 3, name: 'Person C', imageId: 4 }
+  allAuthors = [
+    { id: 1, firstName: 'J.R.R.', lastName: 'Tolkein', year: 1892 },
+    { id: 2, firstName: 'Stephen', lastName: 'King', year: 1947 },
+    { id: 3, firstName: 'J.K.', lastName: 'Rowling', year: 1965 }
   ];
 
-  return allPersons;
+  return allAuthors;
 };
 
 const voteImage = async (id, vote = +1) => {
@@ -77,7 +79,7 @@ const voteImage = async (id, vote = +1) => {
 
 export {
   createImage,
-  createImages,
-  createPersons,
+  getImages,
+  getAuthors,
   voteImage,
 };

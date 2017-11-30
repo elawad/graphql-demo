@@ -3,39 +3,49 @@ import { makeExecutableSchema } from 'graphql-tools';
 import resolvers from './resolvers';
 
 const typeDefs = /* GraphQL */`
-  # schema data type:
+  # Image with metadata
   type Image {
     id: Int!
-    name: String!
+    name: String
     url: String!
-    likes: Int!
-    persons: [Person]
+    likes: Int
+    author: Author
   }
 
-  type Person {
+  # Author of image(s)
+  type Author {
     id: Int!
-    name: String!
-    image: Image
-  }
-
-  # schema query:
-  type Query {
+    firstName: String
+    lastName: String
+    year: Int
     images: [Image]
-    image(id: Int!): Image
-
-    persons: [Person]
-    person(id: Int!): Person
   }
 
-  # schema mutation:
+  # Query Schema
+  type Query {
+    # List all Images
+    images: [Image]
+    # Get an Image
+    image(id: Int!): Image
+    # List all Authors
+    authors: [Author]
+    # Get an Author
+    author(id: Int!): Author
+  }
+
+  # Mutation Schema
   type Mutation {
+    # Create an image
     addImage (name: String!): Image
+    # Like an image
     upVote (id: Int!): Image
+    # Dislike an image
     downVote (id: Int!): Image
   }
 
-  # schema subscription:
+  # Subscription Schema
   type Subscription {
+    # An image's like count was changed
     voteChanged(id: Int): Image
   }
 `;

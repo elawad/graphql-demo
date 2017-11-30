@@ -1,50 +1,46 @@
 import { PubSub /* , withFilter */ } from 'graphql-subscriptions';
 
-import { createImages, createPersons, createImage, voteImage } from '../api-img';
+import { getImages, getAuthors, createImage, voteImage } from '../api-img';
 
 const pubsub = new PubSub();
 let Images;
-let Persons;
+let Authors;
 
 (async () => {
-  Images = await createImages();
-  Persons = await createPersons();
+  Images = await getImages();
+  Authors = await getAuthors();
   console.log('Ready.');
 })();
 
 const resolvers = {
   Image: {
-    persons: i => Persons.filter(p => p.imageId === i.id)
+    author: i => Authors.find(a => a.id === i.authorId)
   },
 
-  Person: {
-    image: p => Images.find(i => i.id === p.imageId)
+  Author: {
+    images: a => Images.filter(i => i.authorId === a.id)
   },
 
   Query: {
     images: () => Images,
     image: (root, { id }) => Images.find(i => i.id === id),
 
-    persons: () => Persons,
-    person: (root, { id }) => Persons.find(p => p.id === id),
+    authors: () => Authors,
+    author: (root, { id }) => Authors.find(a => a.id === id),
   },
 
   Mutation: {
     addImage: async (root, { name }) => {
       const image = await createImage(name);
-
-      Images.push(image);
       return image;
     },
     upVote: async (root, { id }) => {
       const image = await voteImage(id, +1);
-
       pubsub.publish('voteChanged', { voteChanged: image, id: image.id });
       return image;
     },
     downVote: async (root, { id }) => {
       const image = await voteImage(id, -1);
-
       pubsub.publish('voteChanged', { voteChanged: image, id: image.id });
       return image;
     },
