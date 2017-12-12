@@ -2,67 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Card, { CardContent, CardMedia } from 'material-ui/Card';
+import ButtonBase from 'material-ui/ButtonBase';
 import Typography from 'material-ui/Typography';
 
 import DnVoteButton from '../Buttons/DnVoteButton';
 import UpVoteButton from '../Buttons/UpVoteButton';
 import LikesCount from '../LikesCount';
 
-const styles = theme => ({
-  card: {
-    display: 'flex',
-    marginTop: theme.spacing.unit * 2,
-    marginLeft: theme.spacing.unit * 1,
-    justifyContent: 'space-between',
-    position: 'relative',
-
-    [theme.breakpoints.down('sm')]: {
-      width: '100%', // theme.typography.fontSize + 4,
-    },
-  },
-  details: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  content: {
-    flex: '1 0 auto',
-    minWidth: '8em',
-  },
-  cover: {
-    width: 225,
-    minHeight: 150,
-  },
-  controls: {
-    display: 'flex',
-    alignItems: 'center',
-    paddingLeft: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-  },
-  title: {
-    maxWidth: '5.25em',
-    textOverflow: 'ellipsis',
-    overflowX: 'hidden',
-    whiteSpace: 'nowrap',
-  },
-  creator: {
-    position: 'absolute',
-    right: theme.spacing.unit,
-    bottom: theme.spacing.unit,
-    color: 'white',
-    textShadow: '1px 1px 1px rgb(1,1,1)',
-    letterSpacing: '1px',
-    backgroundColor: '#0000002e',
-    paddingLeft: theme.spacing.unit / 2,
-    paddingRight: theme.spacing.unit / 2,
-  },
-  // playIcon: {
-  //   height: 38,
-  //   width: 38,
-  // },
-});
+import styles from './styles';
 
 const MediaCard = (props) => {
-  const { classes, image } = props;
+  const { classes, image, onImageClick } = props;
   const {
     id, name, url, likes,
     author
@@ -87,11 +37,19 @@ const MediaCard = (props) => {
 
       </div>
 
-      <CardMedia
-        className={classes.cover}
-        image={url}
-        title={name}
-      />
+      <ButtonBase
+        focusRipple
+        className={classes.coverButton}
+      >
+        <CardMedia
+          className={classes.cover}
+          image={url}
+          title={name}
+          role="button"
+          onClick={() => onImageClick()}
+        />
+      </ButtonBase>
+
       {author && (
       <Typography type="caption" color="secondary" className={classes.creator}>
         {author.firstName[0]}. {author.lastName}
@@ -104,13 +62,23 @@ const MediaCard = (props) => {
 MediaCard.propTypes = {
   classes: PropTypes.shape({}).isRequired,
   // theme: PropTypes.shape({}).isRequired,
+
   image: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
     likes: PropTypes.number.isRequired,
+
+    author: PropTypes.shape({
+      firstName: PropTypes.string.isRequired,
+      lastName: PropTypes.string.isRequired,
+    })
   }).isRequired,
+
+  onImageClick: PropTypes.func.isRequired,
 };
+
+// MediaCard.defaultProps = {};
 
 const CardWithStyle = withStyles(styles, { withTheme: true })(MediaCard);
 
