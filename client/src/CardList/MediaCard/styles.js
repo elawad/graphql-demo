@@ -22,6 +22,7 @@ export default theme => ({
   },
   coverButton: {
     padding: 0,
+    margin: 0,
   },
   cover: {
     width: 225,

@@ -15,10 +15,10 @@ const Transition = props => (
 );
 
 const CardDetails = ({
-  isLoaded, isOpen, url,
-  onLoaded, onClose,
+  isOpen, onClose, url,
+  isLoaded, onLoaded,
 
-  // material ui
+  // material ui props
   classes, fullScreen,
 
 }) => (
@@ -35,28 +35,29 @@ const CardDetails = ({
     >
       <img
         className={classes.image}
+        style={{ opacity: isLoaded ? 1 : 0 }}
         onLoad={onLoaded}
         src={url}
-        style={{ display: isLoaded ? 'block' : 'none' }}
         alt="preview"
       />
 
-      {!isLoaded && (
-        <CircularProgress
-          className={classes.progress}
-          color="accent"
-        />
-      )}
+      <CircularProgress
+        className={classes.progress}
+        style={{ opacity: isLoaded ? 0 : 1 }}
+        // size={50}
+        color="accent"
+      />
     </DialogContent>
+
   </Dialog>
 );
 
 CardDetails.propTypes = {
   url: PropTypes.string.isRequired,
-  isLoaded: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  onLoaded: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  isLoaded: PropTypes.bool.isRequired,
+  onLoaded: PropTypes.func.isRequired,
 
   classes: PropTypes.shape({}).isRequired,
   fullScreen: PropTypes.bool.isRequired,
