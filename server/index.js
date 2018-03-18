@@ -10,6 +10,7 @@ import graphQLSchema from './src/graphql-img/schema';
 
 const MSG = 'GraphQL Server 🚀';
 const PORT = process.env.PORT || 4000;
+const HOST = process.env.API_URL || 'localhost';
 const server = express();
 
 // GraphQL
@@ -19,7 +20,7 @@ server.use('/graphql', cors(), bodyParser.json(), graphqlExpress({
 
 server.get('/graphiql', graphiqlExpress({
   endpointURL: '/graphql',
-  subscriptionsEndpoint: `ws://localhost:${PORT}/subscriptions`,
+  subscriptionsEndpoint: `ws://${HOST}:${PORT}/subscriptions`,
 }));
 
 // Serve client site
@@ -39,7 +40,7 @@ if (process.env.NODE_ENV === 'production') {
 // Wrap the Express server
 const ws = createServer(server);
 ws.listen(PORT, () => {
-  const URL = `http://localhost:${PORT}`;
+  const URL = `http://${HOST}:${PORT}`;
   console.log(`${MSG}\nApp: ${URL}\nGQL: ${URL}/graphiql`);
 
   // Set up WebSocket for handling GraphQL subscriptions
