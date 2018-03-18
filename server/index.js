@@ -9,7 +9,7 @@ import { SubscriptionServer } from 'subscriptions-transport-ws';
 import graphQLSchema from './src/graphql-img/schema';
 
 const MSG = 'GraphQL Server 🚀';
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 const server = express();
 
 // GraphQL

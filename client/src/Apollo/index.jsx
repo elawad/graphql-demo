@@ -9,7 +9,7 @@ import { getMainDefinition } from 'apollo-utilities';
 
 import App from '../App/App';
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 const HOST = 'localhost';
 // const HOST = '192.168.1.100';
 
