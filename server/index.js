@@ -12,6 +12,7 @@ const MSG = 'GraphQL Server 🚀';
 const PORT = 4000;
 const server = express();
 
+// GraphQL
 server.use('/graphql', cors(), bodyParser.json(), graphqlExpress({
   schema: graphQLSchema,
 }));
@@ -21,19 +22,25 @@ server.get('/graphiql', graphiqlExpress({
   subscriptionsEndpoint: `ws://localhost:${PORT}/subscriptions`,
 }));
 
-server.get('/', async (req, res) => {
-  const query = '{ image(id: 2) { name likes url } }';
-  const meta = await graphql(graphQLSchema, query);
-  const data = JSON.stringify(meta, null, 4);
+// Serve client site
+if (process.env.NODE_ENV === 'production') {
+  server.use(express.static('../client/build'));
+} else {
+// Serve sample data
+  server.get('/', async (req, res) => {
+    const query = '{ image(id: 2) { name likes url } }';
+    const meta = await graphql(graphQLSchema, query);
+    const data = JSON.stringify(meta, null, 4);
 
-  res.send(`${MSG} <br/><br/> <pre style='overflow:hidden'>${data}</pre>`);
-});
+    res.send(`${MSG} <br/><br/> <pre style='overflow:hidden'>${data}</pre> ${process.env.NODE_ENV}`);
+  });
+}
 
 // Wrap the Express server
 const ws = createServer(server);
 ws.listen(PORT, () => {
   const URL = `http://localhost:${PORT}`;
-  console.log(`${MSG}\nAPI: ${URL}\nGQL: ${URL}/graphiql`);
+  console.log(`${MSG}\nApp: ${URL}\nGQL: ${URL}/graphiql`);
 
   // Set up WebSocket for handling GraphQL subscriptions
   return new SubscriptionServer({
