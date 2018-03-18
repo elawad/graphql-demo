@@ -10,7 +10,7 @@ import { getMainDefinition } from 'apollo-utilities';
 import App from '../App/App';
 
 const PORT = process.env.PORT || 4000;
-const HOST = 'localhost';
+const HOST = process.env.API_URL || 'localhost';
 // const HOST = '192.168.1.100';
 
 // Create an http link:
