@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 4000;
 const HOST = process.env.API_URL || `http://localhost:${PORT}`;
 const HOST_WS = HOST.replace(/^http/, 'ws');
 
-console.log(`Server: ${process.env.NODE_ENV} ${process.env.API_URL} ${PORT} ${HOST} ${HOST_WS}`);
+console.log(`Server: ${process.env.API_URL} ${PORT} ${HOST} ${HOST_WS}`);
 
 const server = express();
 
@@ -37,7 +37,7 @@ if (process.env.NODE_ENV === 'production') {
     const meta = await graphql(graphQLSchema, query);
     const data = JSON.stringify(meta, null, 4);
 
-    res.send(`${MSG} <br/><br/> <pre style='overflow:hidden'>${data}</pre> ${process.env.NODE_ENV}`);
+    res.send(`${MSG} <br/><br/> <pre style='overflow:hidden'>${data}</pre>`);
   });
 }
 
