@@ -13,9 +13,6 @@ const PORT = 4000;
 const HOST = process.env.REACT_APP_API_URL || `http://localhost:${PORT}`;
 const HOST_WS = HOST.replace(/^http/, 'ws');
 
-console.log(`Client: ${process.env.NODE_ENV} ${process.env.REACT_APP_API_URL} ${PORT} ${HOST} ${HOST_WS}`);
-// const HOST = '192.168.1.100';
-
 // Create an http link:
 const httpLink = new HttpLink({
   uri: `${HOST}/graphql`

@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "nodemon ./index.js --exec babel-node -e js",
-    "start:prod": "node ./build/index.js",
+    "start:prod": "NODE_ENV=production node ./build/index.js",
     "build": "yarn run build:index && yarn run build:src",
     "build:index": "babel index.js -d build",
     "build:src": "babel src -d build/src",

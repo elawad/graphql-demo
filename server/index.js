@@ -13,8 +13,6 @@ const PORT = process.env.PORT || 4000;
 const HOST = process.env.API_URL || `http://localhost:${PORT}`;
 const HOST_WS = HOST.replace(/^http/, 'ws');
 
-console.log(`Server: ${process.env.API_URL} ${PORT} ${HOST} ${HOST_WS}`);
-
 const server = express();
 
 // GraphQL
