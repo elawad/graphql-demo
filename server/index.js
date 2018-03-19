@@ -8,9 +8,15 @@ import { SubscriptionServer } from 'subscriptions-transport-ws';
 
 import graphQLSchema from './src/graphql-img/schema';
 
+const IS_PROD = process.env.NODE_ENV === 'production';
 const MSG = 'GraphQL Server 🚀';
 const PORT = process.env.PORT || 4000;
-const HOST = process.env.API_URL || 'localhost';
+const URL = process.env.API_URL || 'http://localhost';
+const HOST = IS_PROD ? URL : `${URL}:${PORT}`;
+const HOST_WS = HOST.replace(/^http/, 'ws');
+
+console.log(`Server: ${process.env.NODE_ENV} | ${URL}:${PORT} | ${HOST} | ${HOST_WS}`);
+
 const server = express();
 
 // GraphQL
@@ -20,11 +26,11 @@ server.use('/graphql', cors(), bodyParser.json(), graphqlExpress({
 
 server.get('/graphiql', graphiqlExpress({
   endpointURL: '/graphql',
-  subscriptionsEndpoint: `ws://${HOST}:${PORT}/subscriptions`,
+  subscriptionsEndpoint: `${HOST_WS}/subscriptions`,
 }));
 
 // Serve client site
-if (process.env.NODE_ENV === 'production') {
+if (IS_PROD) {
   server.use(express.static('../client/build'));
 } else {
 // Serve sample data
@@ -40,8 +46,7 @@ if (process.env.NODE_ENV === 'production') {
 // Wrap the Express server
 const ws = createServer(server);
 ws.listen(PORT, () => {
-  const URL = `http://${HOST}:${PORT}`;
-  console.log(`${MSG}\nApp: ${URL}\nGQL: ${URL}/graphiql`);
+  console.log(`${MSG}\nApp: ${HOST}\nGQL: ${HOST}/graphiql`);
 
   // Set up WebSocket for handling GraphQL subscriptions
   return new SubscriptionServer({

@@ -9,18 +9,23 @@ import { getMainDefinition } from 'apollo-utilities';
 
 import App from '../App/App';
 
+const IS_PROD = process.env.NODE_ENV === 'production';
+const URL = process.env.API_URL || 'http://localhost';
 const PORT = process.env.PORT || 4000;
-const HOST = process.env.API_URL || 'localhost';
+const HOST = IS_PROD ? URL : `${URL}:${PORT}`;
+const HOST_WS = HOST.replace(/^http/, 'ws');
+
+console.log(`Client: ${process.env.NODE_ENV} | ${URL}:${PORT} | ${HOST} | ${HOST_WS}`);
 // const HOST = '192.168.1.100';
 
 // Create an http link:
 const httpLink = new HttpLink({
-  uri: `http://${HOST}:${PORT}/graphql`
+  uri: `${HOST}/graphql`
 });
 
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-  uri: `ws://${HOST}:${PORT}/subscriptions`,
+  uri: `${HOST_WS}/subscriptions`,
   options: {
     reconnect: true,
     reconnectionAttempts: 10,
