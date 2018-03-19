@@ -9,13 +9,11 @@ import { getMainDefinition } from 'apollo-utilities';
 
 import App from '../App/App';
 
-const IS_PROD = process.env.NODE_ENV === 'production';
-const URL = process.env.API_URL || 'http://localhost';
 const PORT = process.env.PORT || 4000;
-const HOST = IS_PROD ? URL : `${URL}:${PORT}`;
+const HOST = process.env.API_URL || `http://localhost:${PORT}`;
 const HOST_WS = HOST.replace(/^http/, 'ws');
 
-console.log(`Client: ${process.env.NODE_ENV} | ${URL}:${PORT} | ${HOST} | ${HOST_WS}`);
+console.log(`Client: ${process.env.NODE_ENV} ${process.env.API_URL} ${PORT} ${HOST} ${HOST_WS}`);
 // const HOST = '192.168.1.100';
 
 // Create an http link:
