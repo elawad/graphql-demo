@@ -54,3 +54,16 @@ ws.listen(PORT, () => {
     path: '/subscriptions',
   });
 });
+
+
+// Server Errors
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection:', reason.message);
+  console.error(promise);
+  process.exit(1);
+});
