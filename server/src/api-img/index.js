@@ -49,12 +49,18 @@ const getImages = async (num = 12) => {
   const imageJobs = ids.map(async (id) => {
     await delay(id * 100);
     const image = getData(id);
-    image.url = await fetchUrl(id);
+
+    try {
+      image.url = await fetchUrl(id);
+    } catch (e) {
+      console.error(e.message);
+      return null;
+    }
 
     return image;
   });
 
-  allImages = await Promise.all(imageJobs);
+  allImages = await Promise.all(imageJobs).then(images => images.filter(i => i));
 
   return allImages;
 };
