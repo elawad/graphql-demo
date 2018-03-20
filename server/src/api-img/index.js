@@ -6,6 +6,10 @@ let allImages = [];
 let allAuthors = [];
 let nextId = 0;
 
+const delay = (t = 250) => (
+  new Promise(resolve => setTimeout(resolve, t))
+);
+
 const fetchUrl = async (id) => {
   const coll = collections[id % collections.length];
   const size = sizes[id % sizes.length];
@@ -38,12 +42,15 @@ const getImages = async (num = 12) => {
 
   const ids = Array(num).fill().map(() => {
     nextId += 1;
+
     return nextId;
   });
 
   const imageJobs = ids.map(async (id) => {
+    await delay(id * 100);
     const image = getData(id);
     image.url = await fetchUrl(id);
+
     return image;
   });
 
@@ -65,9 +72,6 @@ const getAuthors = () => {
 };
 
 const voteImage = async (id, vote = +1) => {
-  // synthetic delay
-  await new Promise(resolve => setTimeout(resolve, 150));
-
   const index = allImages.findIndex(i => i.id === id);
   const image = allImages[index];
   const likes = image.likes + vote;
