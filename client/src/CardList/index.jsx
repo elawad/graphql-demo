@@ -32,6 +32,8 @@ class CardList extends Component {
     return (
       <div>
         <div style={styles}>
+          {images.length === 0 && <p>No Image Data</p>}
+
           {images.map(image => (
             <MediaCard
               key={image.id}
@@ -52,9 +54,11 @@ class CardList extends Component {
 }
 
 CardList.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.shape({
-    //
-  })).isRequired,
+  images: PropTypes.arrayOf(PropTypes.shape({})),
+};
+
+CardList.defaultProps = {
+  images: [],
 };
 
 export default CardList;
