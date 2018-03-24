@@ -8,6 +8,8 @@ const typeDefs = /* GraphQL */`
     id: Int!
     name: String
     url: String!
+    smUrl: String!
+    mdUrl: String!
     likes: Int
     author: Author
   }

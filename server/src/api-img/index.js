@@ -1,7 +1,7 @@
 import axios from 'axios';
+import { Authors, Collections, Sizes } from './data';
 
-const collections = [203782, 261936, 482366, 578066, 885319];
-const sizes = ['225x150', '240x160', '255x170', '270x180'];
+const API_URL = 'https://source.unsplash.com/collection';
 let allImages = [];
 let allAuthors = [];
 let nextId = 0;
@@ -10,13 +10,29 @@ const delay = (t = 250) => (
   new Promise(resolve => setTimeout(resolve, t))
 );
 
-const fetchUrl = async (id) => {
-  const coll = collections[id % collections.length];
-  const size = sizes[id % sizes.length];
-  const url = `https://source.unsplash.com/collection/${coll}/${size}`;
+const parseUrls = (url) => {
+  const n = url.indexOf('?');
+  const baseUrl = url.substring(0, n);
 
-  const response = await axios.get(url);
-  return response.request.res.responseUrl;
+  const regExp = /w=(\d+)&h=(\d+)&fit=(\w+)/;
+  const smParam = url.match(regExp)[0];
+  const smUrl = `${baseUrl}?${smParam}`;
+
+  const mdParam = 'w=800&fit=max';
+  const mdUrl = `${baseUrl}?${mdParam}`;
+
+  return { url, smUrl, mdUrl };
+};
+
+const fetchUrl = async (id) => {
+  const coll = Collections[id % Collections.length];
+  const size = Sizes[id % Sizes.length];
+
+  const response = await axios.get(`${API_URL}/${coll}/${size}`);
+  const url = response.request.res.responseUrl;
+  const urls = parseUrls(url);
+
+  return urls;
 };
 
 const getData = (id, name) => ({
@@ -29,9 +45,11 @@ const getData = (id, name) => ({
 const createImage = async (name) => {
   nextId += 1;
   const id = nextId;
-  const image = getData(id, name);
-  const url = await fetchUrl(id);
-  image.url = url;
+
+  const imgData = getData(id, name);
+  const urls = await fetchUrl(id);
+
+  const image = Object.assign({}, imgData, urls);
   allImages.unshift(image);
 
   return image;
@@ -48,14 +66,18 @@ const getImages = async (num = 12) => {
 
   const imageJobs = ids.map(async (id) => {
     await delay(id * 100);
-    const image = getData(id);
+
+    const imgData = getData(id);
+    let urls = {};
 
     try {
-      image.url = await fetchUrl(id);
+      urls = await fetchUrl(id);
     } catch (e) {
       console.error(e.message);
       return null;
     }
+
+    const image = Object.assign({}, imgData, urls);
 
     return image;
   });
@@ -68,11 +90,7 @@ const getImages = async (num = 12) => {
 const getAuthors = () => {
   if (allAuthors.length > 0) return allAuthors;
 
-  allAuthors = [
-    { id: 1, firstName: 'J.R.R.', lastName: 'Tolkein', year: 1892 },
-    { id: 2, firstName: 'Stephen', lastName: 'King', year: 1947 },
-    { id: 3, firstName: 'J.K.', lastName: 'Rowling', year: 1965 }
-  ];
+  allAuthors = [...Authors];
 
   return allAuthors;
 };
