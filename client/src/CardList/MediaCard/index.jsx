@@ -14,7 +14,7 @@ import styles from './styles';
 const MediaCard = (props) => {
   const { classes, image, onImageClick } = props;
   const {
-    id, name, url, likes,
+    id, name, urlSm, likes,
     author
   } = image;
 
@@ -43,7 +43,7 @@ const MediaCard = (props) => {
       >
         <CardMedia
           className={classes.cover}
-          image={url}
+          image={urlSm}
           title={name}
           role="button"
           onClick={() => onImageClick()}
@@ -66,7 +66,7 @@ MediaCard.propTypes = {
   image: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
+    urlSm: PropTypes.string.isRequired,
     likes: PropTypes.number.isRequired,
 
     author: PropTypes.shape({

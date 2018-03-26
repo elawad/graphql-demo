@@ -17,10 +17,7 @@ class CardList extends Component {
     this.handleImageClick = this.handleImageClick.bind(this);
   }
 
-  handleImageClick(imgUrl) {
-    const regExp = /&w=(\d+)&h=(\d+)&fit=(\w+)&/;
-    const url = imgUrl.replace(regExp, '&w=800&h=fit=max&');
-
+  handleImageClick(url) {
     this.setState({ url, isLoaded: false, isOpen: true });
   }
 
@@ -38,7 +35,7 @@ class CardList extends Component {
             <MediaCard
               key={image.id}
               image={image}
-              onImageClick={() => this.handleImageClick(image.url)}
+              onImageClick={() => this.handleImageClick(image.urlMd)}
             />
           ))}
         </div>
@@ -54,7 +51,10 @@ class CardList extends Component {
 }
 
 CardList.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.shape({})),
+  images: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    urlMd: PropTypes.string.isRequired,
+  })),
 };
 
 CardList.defaultProps = {

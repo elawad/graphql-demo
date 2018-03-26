@@ -9,7 +9,7 @@ import CardList from '../CardList';
 const IMAGE_QUERY = gql`
 query {
   images {
-    id likes name url
+    id likes name urlSm urlMd
     # author {
     #   firstName lastName
     # }
@@ -26,7 +26,7 @@ subscription {
 const CREATE_SUBSCRIPTION = gql`
 subscription {
   imageCreated {
-    id likes name url
+    id likes name urlSm urlMd
   }
 }`;
 

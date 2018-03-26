@@ -14,20 +14,25 @@ const parseUrls = (url) => {
   const n = url.indexOf('?');
   const baseUrl = url.substring(0, n);
 
-  const regExp = /w=(\d+)&h=(\d+)&fit=(\w+)/;
+  const regExp = /w=(\d+)&h=(\d+)&fit=(\w+)/; // w=240&h=160&fit=crop
   const smParam = url.match(regExp)[0];
-  const smUrl = `${baseUrl}?${smParam}`;
+  const urlSm = `${baseUrl}?${smParam}`;
 
   const mdParam = 'w=800&fit=max';
-  const mdUrl = `${baseUrl}?${mdParam}`;
+  const urlMd = `${baseUrl}?${mdParam}`;
 
-  return { url, smUrl, mdUrl };
+  return { urlSm, urlMd };
 };
 
-const fetchUrl = async (id) => {
+const randomFilters = (id) => {
   const coll = Collections[id % Collections.length];
   const size = Sizes[id % Sizes.length];
 
+  return { coll, size };
+};
+
+const fetchUrl = async (id) => {
+  const { coll, size } = randomFilters(id);
   const response = await axios.get(`${API_URL}/${coll}/${size}`);
   const url = response.request.res.responseUrl;
   const urls = parseUrls(url);
