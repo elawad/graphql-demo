@@ -11,15 +11,11 @@ const delay = (t = 250) => (
 );
 
 const parseUrls = (url) => {
-  const n = url.indexOf('?');
-  const baseUrl = url.substring(0, n);
-
-  const regExp = /w=(\d+)&h=(\d+)&fit=(\w+)/; // w=240&h=160&fit=crop
-  const smParam = url.match(regExp)[0];
-  const urlSm = `${baseUrl}?${smParam}`;
-
-  const mdParam = 'w=800&fit=max';
-  const urlMd = `${baseUrl}?${mdParam}`;
+  const urlSm = url;
+  const urlMd = url
+    .replace(/fit=(\w+)/, 'fit=max')
+    .replace(/w=(\d+)/, 'w=800')
+    .replace(/h=(\d+)/, '');
 
   return { urlSm, urlMd };
 };
