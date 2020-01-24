@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "license": "ISC",
   "engines": {
-    "node": "8.6.x",
-    "yarn": "1.5.x"
+    "node": "10.18.x",
+    "yarn": "1.21.x"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -14,7 +14,7 @@
     "lint": "eslint *.js src --fix && echo Lint Passed ❤"
   },
   "dependencies": {
-    "apollo-cache-inmemory": "1.0.0",
+    "apollo-cache-inmemory": "1.6.5",
     "apollo-client": "2.0.1",
     "apollo-link": "1.0.0",
     "apollo-link-http": "1.0.0",
