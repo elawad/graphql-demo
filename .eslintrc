@@ -3,11 +3,9 @@
     "react-app",
     "eslint:recommended",
     "plugin:react/recommended",
-    # "plugin:import/recommended"
   ],
 
   "rules": {
-    "comma-dangle": [1, "only-multiline"],
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "no-console": 1
   }
 }
