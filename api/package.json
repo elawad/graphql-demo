@@ -1,18 +1,16 @@
 {
-  "name": "graphql-demo-server",
+  "name": "graphql-demo-api",
   "version": "1.0.0",
   "license": "ISC",
   "engines": {
     "node": "^14.20",
     "yarn": "^1.22"
   },
+  "type": "module",
+  "main": "index.js",
   "scripts": {
-    "start": "nodemon ./index.js --exec babel-node -e js",
-    "start:prod": "NODE_ENV=production node ./build/index.js",
-    "build": "yarn run build:index && yarn run build:src",
-    "build:index": "babel index.js -d build",
-    "build:src": "babel src -d build/src",
-    "lint": "eslint src --fix=false && echo Lint Passed ❤"
+    "start": "NODE_ENV=production node --experimental-specifier-resolution=node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "apollo-server-express": "^1.2.0",
@@ -30,8 +28,6 @@
     "subscriptions-transport-ws": "^0.9.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
     "eslint": "^4.18.2",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.7.0",

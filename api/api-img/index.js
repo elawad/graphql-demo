@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Authors, Collections, Sizes } from './data';
+import { Authors, Collections, Sizes } from './data.js';
 
 const API_URL = 'https://source.unsplash.com/collection';
 let allImages = [];

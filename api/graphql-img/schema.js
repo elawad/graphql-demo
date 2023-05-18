@@ -1,6 +1,6 @@
 import { makeExecutableSchema } from 'graphql-tools';
 
-import resolvers from './resolvers';
+import resolvers from './resolvers.js';
 
 const typeDefs = /* GraphQL */`
   # Image with metadata

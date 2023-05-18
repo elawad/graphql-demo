@@ -6,7 +6,7 @@ import { graphql, execute, subscribe } from 'graphql';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 
-import graphQLSchema from './src/graphql-img/schema';
+import graphQLSchema from './graphql-img/schema.js';
 
 const MSG = 'GraphQL Server 🚀';
 const PORT = process.env.PORT || 4000;
@@ -25,19 +25,14 @@ server.get('/graphiql', graphiqlExpress({
   subscriptionsEndpoint: `${HOST_WS}/subscriptions`,
 }));
 
-// Serve client site
-if (process.env.NODE_ENV === 'production') {
-  // server.use(express.static('../client/build'));
-} else {
 // Serve sample data
-  server.get('/', async (req, res) => {
-    const query = '{ image(id: 2) { name likes url } }';
-    const meta = await graphql(graphQLSchema, query);
-    const data = JSON.stringify(meta, null, 4);
+server.get('/', async (req, res) => {
+  const query = '{ image(id: 2) { name likes urlSm } }';
+  const meta = await graphql(graphQLSchema, query);
+  const data = JSON.stringify(meta, null, 4);
 
-    res.send(`${MSG} <br/><br/> <pre style='overflow:hidden'>${data}</pre>`);
-  });
-}
+  res.send(`${MSG} <br/><br/> <pre style='overflow:hidden'>${data}</pre>`);
+});
 
 // Wrap the Express server
 const ws = createServer(server);

@@ -7,12 +7,12 @@
     "yarn": "^1.22"
   },
   "scripts": {
-    "postinstall": "cd ./api && yarn install",
     "start": "react-scripts start",
-    "build": "react-scripts build && cd ./api && yarn build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src --fix && echo Lint Passed ❤"
+    "format": "eslint --fix src",
+    "preview": "serve -s build"
   },
   "dependencies": {
     "apollo-cache-inmemory": "1.6.5",
@@ -29,8 +29,11 @@
     "react": "16.0.0",
     "react-animate-on-change": "1.0.1",
     "react-apollo": "2.0.0",
-    "react-dom": "16.0.0",
-    "react-scripts": "3.0.1"
+    "react-dom": "16.0.0"
+  },
+  "devDependencies": {
+    "react-scripts": "3.0.1",
+    "serve": "14.2.0"
   },
   "browserslist": {
     "production": [

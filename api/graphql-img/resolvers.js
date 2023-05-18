@@ -1,6 +1,6 @@
 import { PubSub /* , withFilter */ } from 'graphql-subscriptions';
 
-import { getImages, getAuthors, createImage, voteImage } from '../api-img';
+import { getImages, getAuthors, createImage, voteImage } from '../api-img/index.js';
 
 const pubsub = new PubSub();
 let Images;
