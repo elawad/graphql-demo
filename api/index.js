@@ -16,17 +16,17 @@ const HOST_WS = HOST.replace(/^http/, 'ws');
 const server = express();
 
 // GraphQL
-server.use('/graphql', cors(), bodyParser.json(), graphqlExpress({
+server.use('/api/graphql', cors(), bodyParser.json(), graphqlExpress({
   schema: graphQLSchema,
 }));
 
-server.get('/graphiql', graphiqlExpress({
-  endpointURL: '/graphql',
-  subscriptionsEndpoint: `${HOST_WS}/subscriptions`,
+server.get('/api/graphiql', graphiqlExpress({
+  endpointURL: '/api/graphql',
+  subscriptionsEndpoint: `${HOST_WS}/api/subscriptions`,
 }));
 
 // Serve sample data
-server.get('/', async (req, res) => {
+server.get('/api', async (req, res) => {
   const query = '{ image(id: 2) { name likes urlSm } }';
   const meta = await graphql(graphQLSchema, query);
   const data = JSON.stringify(meta, null, 4);
@@ -37,7 +37,7 @@ server.get('/', async (req, res) => {
 // Wrap the Express server
 const ws = createServer(server);
 ws.listen(PORT, () => {
-  console.log(`${MSG}\nApp: ${HOST}\nGQL: ${HOST}/graphiql`);
+  console.log(`${MSG}\nApp: ${HOST}/api\nGQL: ${HOST}/api/graphiql`);
 
   // Set up WebSocket for handling GraphQL subscriptions
   return new SubscriptionServer({
@@ -46,7 +46,7 @@ ws.listen(PORT, () => {
     schema: graphQLSchema,
   }, {
     server: ws,
-    path: '/subscriptions',
+    path: '/api/subscriptions',
   });
 });
 
