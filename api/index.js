@@ -27,7 +27,7 @@ server.get('/graphiql', graphiqlExpress({
 
 // Serve client site
 if (process.env.NODE_ENV === 'production') {
-  server.use(express.static('../client/build'));
+  // server.use(express.static('../client/build'));
 } else {
 // Serve sample data
   server.get('/', async (req, res) => {
@@ -67,3 +67,5 @@ process.on('unhandledRejection', (reason, promise) => {
   console.error(promise);
   process.exit(1);
 });
+
+export default server;
