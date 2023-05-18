@@ -50,7 +50,6 @@ ws.listen(PORT, () => {
   });
 });
 
-
 // Server Errors
 process.on('uncaughtException', (err) => {
   console.error('Uncaught Exception:', err);
