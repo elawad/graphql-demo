@@ -7,6 +7,7 @@
     "yarn": "^1.22"
   },
   "scripts": {
+    "postinstall": "cd ./api && yarn install",
     "start": "react-scripts start",
     "build": "react-scripts build && cd ./api && yarn build",
     "test": "react-scripts test",
