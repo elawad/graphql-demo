@@ -1,7 +1,6 @@
 import { fieldList, getSearch, getMetaUpdate } from './data';
 import { get, put } from './util';
-import { translateId, translateAsset, translateRelations
-} from './translator';
+import { translateId, translateAsset, translateRelations } from './translator';
 
 const FIELDS = fieldList.join();
 const QUERY = `content=metadata&field=${FIELDS}`;

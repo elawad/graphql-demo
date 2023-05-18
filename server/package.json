@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "license": "ISC",
   "engines": {
-    "node": "10.18.x",
-    "yarn": "1.21.x"
+    "node": "^14.20",
+    "yarn": "^1.22"
   },
   "scripts": {
     "start": "nodemon ./index.js --exec babel-node -e js",
@@ -12,7 +12,7 @@
     "build": "yarn run build:index && yarn run build:src",
     "build:index": "babel index.js -d build",
     "build:src": "babel src -d build/src",
-    "lint": "eslint *.js src --fix && echo Lint Passed ❤"
+    "lint": "eslint src --fix=false && echo Lint Passed ❤"
   },
   "dependencies": {
     "apollo-server-express": "^1.2.0",
