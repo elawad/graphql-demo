@@ -6,7 +6,7 @@ import { graphql, execute, subscribe } from 'graphql';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 
-import graphQLSchema from './graphql-img/schema.js';
+import graphQLSchema from './_graphql/schema.js';
 
 const MSG = 'GraphQL Server 🚀';
 const PORT = process.env.PORT || 4000;
@@ -37,7 +37,7 @@ server.get('/api/data', async (req, res) => {
 // Wrap the Express server
 const ws = createServer(server);
 ws.listen(PORT, () => {
-  console.log(`${MSG}\nApp: ${HOST}/api\nGQL: ${HOST}/api/graphiql`);
+  console.log(`${MSG}\n${HOST}/api/graphiql`);
 
   // Set up WebSocket for handling GraphQL subscriptions
   return new SubscriptionServer({
