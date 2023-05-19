@@ -66,9 +66,7 @@ class Container extends Component {
   render() {
     const { data: { images, loading } } = this.props;
 
-    return (
-      !loading && <CardList images={images} />
-    );
+    return <CardList images={images} loading={loading} />
   }
 }
 

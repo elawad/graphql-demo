@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { CircularProgress } from 'material-ui/Progress';
 
 import MediaCard from './MediaCard';
 import CardDetails from '../CardDetails';
@@ -21,15 +22,15 @@ class CardList extends Component {
     this.setState({ url, isLoaded: false, isOpen: true });
   }
 
-
   render() {
-    const { images } = this.props;
+    const { images, loading } = this.props;
     const { url, isLoaded, isOpen } = this.state;
 
     return (
       <div>
         <div style={styles}>
-          {images.length === 0 && <p>No Image Data</p>}
+          {loading && <CircularProgress color="accent" style={{ marginTop: 16 }} />}
+          {!loading && !images.length && <p>No Image Data</p>}
 
           {images.map(image => (
             <MediaCard
@@ -55,6 +56,7 @@ CardList.propTypes = {
     id: PropTypes.number.isRequired,
     urlMd: PropTypes.string.isRequired,
   })),
+  loading: PropTypes.bool.isRequired,
 };
 
 CardList.defaultProps = {
