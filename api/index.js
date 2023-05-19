@@ -9,7 +9,7 @@ import { SubscriptionServer } from 'subscriptions-transport-ws';
 import graphQLSchema from './_graphql/schema.js';
 
 const MSG = 'GraphQL Server 🚀';
-const PORT = process.env.PORT || 4000;
+const PORT = 4000;
 const HOST = process.env.REACT_APP_API_URL || `http://localhost:${PORT}`;
 const HOST_WS = HOST.replace(/^http/, 'ws');
 
@@ -31,7 +31,7 @@ server.get('/api/data', async (req, res) => {
   const meta = await graphql(graphQLSchema, query);
   const data = JSON.stringify(meta, null, 4);
 
-  res.send(`${MSG} <br/><br/> <pre style='overflow:hidden'>${data}</pre>`);
+  res.send(`${MSG}<br/><br/><pre style='white-space: pre-wrap;'>${data}</pre>`);
 });
 
 // Wrap the Express server

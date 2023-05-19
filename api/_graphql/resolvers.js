@@ -4,13 +4,14 @@ import { getImages, getAuthors, createImage, voteImage } from './images.js';
 
 const pubsub = new PubSub();
 const Authors = getAuthors();
-let Images;
+let Images = getImages();
 
 async function init() {
-  if (Images) return;
+  if (Array.isArray(Images)) return;
+  Images = await Promise.resolve(Images);
+};
 
-  Images = await getImages();
-}
+init();
 
 const resolvers = {
   Image: {
