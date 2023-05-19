@@ -26,7 +26,7 @@ server.get('/api/graphiql', graphiqlExpress({
 }));
 
 // Serve sample data
-server.get('/api', async (req, res) => {
+server.get('/api/data', async (req, res) => {
   const query = '{ image(id: 2) { name likes urlSm } }';
   const meta = await graphql(graphQLSchema, query);
   const data = JSON.stringify(meta, null, 4);

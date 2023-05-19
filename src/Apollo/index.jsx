@@ -23,7 +23,7 @@ const wsLink = new WebSocketLink({
   uri: `${HOST_WS}/subscriptions`,
   options: {
     reconnect: true,
-    reconnectionAttempts: 10,
+    reconnectionAttempts: 4,
   }
 });
 
