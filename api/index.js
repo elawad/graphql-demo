@@ -15,6 +15,15 @@ const HOST_WS = HOST.replace(/^http/, 'ws');
 
 const app = express();
 
+// Cache
+app.use((req, res, next) => {
+  const { method, originalUrl } = req;
+  if (method === 'POST' && originalUrl === '/api/graphql') {
+    res.setHeader('Cache-Control', 's-maxage=3600');
+  }
+  next();
+});
+
 // GraphQL
 app.use('/api/graphql',
   cors(),
