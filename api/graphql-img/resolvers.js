@@ -3,14 +3,14 @@ import { PubSub /* , withFilter */ } from 'graphql-subscriptions';
 import { getImages, getAuthors, createImage, voteImage } from '../api-img/index.js';
 
 const pubsub = new PubSub();
+const Authors = getAuthors();
 let Images;
-let Authors;
 
-(async () => {
-  Images = await getImages();
-  Authors = await getAuthors();
-  console.log('Ready.');
-})();
+async function init() {
+  if (!Images) {
+    Images = await getImages();
+  }
+}
 
 const resolvers = {
   Image: {
@@ -18,13 +18,22 @@ const resolvers = {
   },
 
   Author: {
-    images: a => Images.filter(i => i.authorId === a.id)
+    images: async (a) => {
+      await init();
+      return Images.filter(i => i.authorId === a.id);
+    }
   },
 
   Query: {
-    images: () => Images.sort((a, b) => b.id - a.id),
+    images: async () => {
+      await init();
+      return Images.sort((a, b) => b.id - a.id);
+    },
 
-    image: (root, { id }) => Images.find(i => i.id === id),
+    image: async (root, { id }) => {
+      await init();
+      return Images.find(i => i.id === id);
+    },
 
     authors: () => Authors,
     author: (root, { id }) => Authors.find(a => a.id === id),
