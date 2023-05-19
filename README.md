@@ -2,31 +2,20 @@
 
 > Demo app using GraphQL and Apollo.
 
-### Run App ###
+### Run UI ###
 ```
-yarn run installer
-yarn build
+yarn
 yarn start
 ```
 
-### Run Separate Apps ###
-###### Server
+### Run API ###
 ```
-cd server
-yarn install
-yarn start
-```
-
-###### Client
-```
-cd client
-yarn install
-yarn start
+yarn start:api
 ```
 
 ### Sites ###
-* [UI Frontend](https://graphql-app.herokuapp.com)
-* [GraphQL Server](https://graphql-app.herokuapp.com/graphiql)
+* [UI Frontend](https://graphql-demo-mu.vercel.app)
+* [GraphQL Server](https://graphql-demo-mu.vercel.app/api/graphiql)
 
 ### Application Stack ###
 ###### Server
