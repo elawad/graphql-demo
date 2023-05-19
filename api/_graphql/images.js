@@ -1,14 +1,12 @@
 import axios from 'axios';
 import { Authors, Collections, Sizes } from './data.js';
 
-const API_URL = 'https://source.unsplash.com/collection';
+const IMG_API = 'https://source.unsplash.com/collection';
 let allImages = [];
 let allAuthors = [];
 let nextId = 0;
 
-const delay = (t = 250) => (
-  new Promise(resolve => setTimeout(resolve, t))
-);
+const delay = (t = 250) => new Promise((resolve) => setTimeout(resolve, t));
 
 const parseUrls = (url) => {
   const urlSm = url;
@@ -29,7 +27,7 @@ const randomFilters = (id) => {
 
 const fetchUrl = async (id) => {
   const { coll, size } = randomFilters(id);
-  const response = await axios.get(`${API_URL}/${coll}/${size}`);
+  const response = await axios.get(`${IMG_API}/${coll}/${size}`);
   const url = response.request.res.responseUrl;
   const urls = parseUrls(url);
 
@@ -40,7 +38,7 @@ const getData = (id, name) => ({
   id,
   name: name ? `${name}` : `Image ${id}`,
   likes: Math.floor(Math.random() * 4),
-  authorId: (id % 4 === 0) ? null : Math.ceil(Math.random() * 3),
+  authorId: id % 4 === 0 ? null : Math.ceil(Math.random() * 3),
 });
 
 const createImage = async (name) => {
@@ -59,11 +57,12 @@ const createImage = async (name) => {
 const getImages = async (num = 12) => {
   if (allImages.length > 0) return allImages;
 
-  const ids = Array(num).fill().map(() => {
-    nextId += 1;
-
-    return nextId;
-  });
+  const ids = Array(num)
+    .fill()
+    .map(() => {
+      nextId += 1;
+      return nextId;
+    });
 
   const imageJobs = ids.map(async (id) => {
     await delay(id * 100);
@@ -83,7 +82,9 @@ const getImages = async (num = 12) => {
     return image;
   });
 
-  allImages = await Promise.all(imageJobs).then(images => images.filter(i => i));
+  allImages = await Promise.all(imageJobs).then((images) =>
+    images.filter((i) => !!i)
+  );
 
   return allImages;
 };
@@ -97,18 +98,13 @@ const getAuthors = () => {
 };
 
 const voteImage = async (id, vote = +1) => {
-  const index = allImages.findIndex(i => i.id === id);
+  const index = allImages.findIndex((i) => i.id === id);
   const image = allImages[index];
   const likes = image.likes + vote;
-  image.likes = (likes > 0) ? likes : 0;
+  image.likes = likes > 0 ? likes : 0;
   allImages[index] = image;
 
   return image;
 };
 
-export {
-  createImage,
-  getImages,
-  getAuthors,
-  voteImage,
-};
+export { createImage, getImages, getAuthors, voteImage };

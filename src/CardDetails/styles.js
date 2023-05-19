@@ -1,4 +1,4 @@
-export default theme => ({
+export default (theme) => ({
   root: {
     display: 'flex',
     flex: '1 0 auto',

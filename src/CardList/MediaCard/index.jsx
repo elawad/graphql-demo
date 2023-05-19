@@ -13,17 +13,15 @@ import styles from './styles';
 
 const MediaCard = (props) => {
   const { classes, image, onImageClick } = props;
-  const {
-    id, name, urlSm, likes,
-    author
-  } = image;
+  const { id, name, urlSm, likes, author } = image;
 
   return (
     <Card className={classes.card}>
       <div className={classes.details}>
-
         <CardContent className={classes.content}>
-          <Typography type="headline" className={classes.title}>{name}</Typography>
+          <Typography type="headline" className={classes.title}>
+            {name}
+          </Typography>
 
           <Typography type="subheading" color="secondary">
             <LikesCount likes={likes} />
@@ -34,13 +32,9 @@ const MediaCard = (props) => {
           <UpVoteButton id={id} likes={likes} />
           <DnVoteButton id={id} likes={likes} />
         </div>
-
       </div>
 
-      <ButtonBase
-        focusRipple
-        className={classes.coverButton}
-      >
+      <ButtonBase focusRipple className={classes.coverButton}>
         <CardMedia
           className={classes.cover}
           image={urlSm}
@@ -51,10 +45,14 @@ const MediaCard = (props) => {
       </ButtonBase>
 
       {author && (
-      <Typography type="caption" color="secondary" className={classes.creator}>
-        {author.firstName[0]}. {author.lastName}
-      </Typography>)
-      }
+        <Typography
+          type="caption"
+          color="secondary"
+          className={classes.creator}
+        >
+          {author.firstName[0]}. {author.lastName}
+        </Typography>
+      )}
     </Card>
   );
 };
@@ -72,7 +70,7 @@ MediaCard.propTypes = {
     author: PropTypes.shape({
       firstName: PropTypes.string.isRequired,
       lastName: PropTypes.string.isRequired,
-    })
+    }),
   }).isRequired,
 
   onImageClick: PropTypes.func.isRequired,

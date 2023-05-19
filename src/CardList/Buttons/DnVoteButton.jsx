@@ -21,9 +21,9 @@ class VoteButton extends Component {
         downVote: {
           __typename: 'Image',
           id,
-          likes: (likes <= 0) ? 0 : likes - 1,
-        }
-      }
+          likes: likes <= 0 ? 0 : likes - 1,
+        },
+      },
     });
   }
 

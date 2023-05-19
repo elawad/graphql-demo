@@ -13,20 +13,25 @@ const PORT = 4000;
 const HOST = process.env.REACT_APP_API_URL || `http://localhost:${PORT}`;
 const HOST_WS = HOST.replace(/^http/, 'ws');
 
-const server = express();
+const app = express();
 
 // GraphQL
-server.use('/api/graphql', cors(), bodyParser.json(), graphqlExpress({
-  schema: graphQLSchema,
-}));
+app.use('/api/graphql',
+  cors(),
+  bodyParser.json(),
+  graphqlExpress({ schema: graphQLSchema })
+);
 
-server.get('/api/graphiql', graphiqlExpress({
-  endpointURL: '/api/graphql',
-  subscriptionsEndpoint: `${HOST_WS}/api/subscriptions`,
-}));
+// GraphQL UI
+app.get('/api/graphiql',
+  graphiqlExpress({
+    endpointURL: '/api/graphql',
+    subscriptionsEndpoint: `${HOST_WS}/api/subscriptions`,
+  })
+);
 
 // Serve sample data
-server.get('/api/data', async (req, res) => {
+app.get('/api/data', async (req, res) => {
   const query = '{ image(id: 2) { name likes urlSm } }';
   const meta = await graphql(graphQLSchema, query);
   const data = JSON.stringify(meta, null, 4);
@@ -34,8 +39,8 @@ server.get('/api/data', async (req, res) => {
   res.send(`${MSG}<br/><br/><pre style='white-space: pre-wrap;'>${data}</pre>`);
 });
 
-// Wrap the Express server
-const ws = createServer(server);
+// GraphQL Subscriptions
+const ws = createServer(app);
 ws.listen(PORT, () => {
   console.log(`${MSG}\n${HOST}/api/graphiql`);
 
@@ -62,4 +67,4 @@ process.on('unhandledRejection', (reason, promise) => {
   process.exit(1);
 });
 
-export default server;
+export default app;

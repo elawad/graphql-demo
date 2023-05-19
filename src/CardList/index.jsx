@@ -12,7 +12,7 @@ class CardList extends Component {
     this.state = {
       url: '',
       isLoaded: false,
-      isOpen: false
+      isOpen: false,
     };
 
     this.handleImageClick = this.handleImageClick.bind(this);
@@ -29,10 +29,12 @@ class CardList extends Component {
     return (
       <div>
         <div style={styles}>
-          {loading && <CircularProgress color="accent" style={{ marginTop: 16 }} />}
+          {loading && (
+            <CircularProgress color="accent" style={{ marginTop: 16 }} />
+          )}
           {!loading && !images.length && <p>No Image Data</p>}
 
-          {images.map(image => (
+          {images.map((image) => (
             <MediaCard
               key={image.id}
               image={image}
@@ -52,10 +54,12 @@ class CardList extends Component {
 }
 
 CardList.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    urlMd: PropTypes.string.isRequired,
-  })),
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      urlMd: PropTypes.string.isRequired,
+    })
+  ),
   loading: PropTypes.bool.isRequired,
 };
 

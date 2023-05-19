@@ -1,10 +1,6 @@
-const Collections = [
-  203782, 261936, 482366, 578066, 885319
-];
+const Collections = [203782, 261936, 482366, 578066, 885319];
 
-const Sizes = [
-  '225x150', '240x160', '255x170', '270x180'
-];
+const Sizes = ['225x150', '240x160', '255x170', '270x180'];
 
 const Authors = [
   { id: 1, firstName: 'J.R.R.', lastName: 'Tolkein', year: 1892 },
@@ -12,8 +8,4 @@ const Authors = [
   { id: 3, firstName: 'J.K.', lastName: 'Rowling', year: 1965 },
 ];
 
-export {
-  Collections,
-  Sizes,
-  Authors,
-};
+export { Collections, Sizes, Authors };

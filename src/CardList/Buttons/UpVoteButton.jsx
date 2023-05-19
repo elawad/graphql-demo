@@ -23,8 +23,8 @@ class VoteButton extends Component {
           __typename: 'Image',
           id,
           likes: likes + 1,
-        }
-      }
+        },
+      },
     });
   }
 

@@ -7,32 +7,33 @@ import CardList from '../CardList';
 
 // Query all images
 const IMAGE_QUERY = gql`
-query {
-  images {
-    id likes name urlSm urlMd
-    # author {
-    #   firstName lastName
-    # }
+  query {
+    images {
+      id likes name urlSm urlMd
+      # author { firstName lastName }
+    }
   }
-}`;
+`;
 
 // Subscriptions
 const VOTE_SUBSCRIPTION = gql`
-subscription {
-  voteChanged {
-    id likes
+  subscription {
+    voteChanged {
+      id likes
+    }
   }
-}`;
+`;
 const CREATE_SUBSCRIPTION = gql`
-subscription {
-  imageCreated {
-    id likes name urlSm urlMd
+  subscription {
+    imageCreated {
+      id likes name urlSm urlMd
+    }
   }
-}`;
+`;
 
 class Container extends Component {
   componentWillMount() {
-    const { data: { subscribeToMore } } = this.props;
+    const { subscribeToMore } = this.props.data;
 
     subscribeToMore({
       document: VOTE_SUBSCRIPTION,
@@ -43,11 +44,11 @@ class Container extends Component {
         const newVote = subscriptionData.voteChanged;
         const { likes, id } = newVote;
         const images = [...prev.images];
-        const i = images.findIndex(image => image.id === id);
+        const i = images.findIndex((image) => image.id === id);
         const image = { ...images[i], likes };
         images[i] = image;
         return { ...prev, images };
-      }
+      },
     });
 
     subscribeToMore({
@@ -59,14 +60,14 @@ class Container extends Component {
         const image = subscriptionData.imageCreated;
         const images = [image, ...prev.images];
         return { ...prev, images };
-      }
+      },
     });
   }
 
   render() {
-    const { data: { images, loading } } = this.props;
+    const { images, loading } = this.props.data;
 
-    return <CardList images={images} loading={loading} />
+    return <CardList images={images} loading={loading} />;
   }
 }
 

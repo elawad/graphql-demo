@@ -9,17 +9,17 @@ let Images = getImages();
 async function init() {
   if (Array.isArray(Images)) return;
   Images = await Promise.resolve(Images);
-};
+}
 
 init();
 
 const resolvers = {
   Image: {
-    author: i => Authors.find(a => a.id === i.authorId)
+    author: (i) => Authors.find((a) => a.id === i.authorId),
   },
 
   Author: {
-    images: a => Images.filter(i => i.authorId === a.id)
+    images: (a) => Images.filter((i) => i.authorId === a.id),
   },
 
   Query: {
@@ -27,10 +27,10 @@ const resolvers = {
       await init();
       return Images.sort((a, b) => b.id - a.id);
     },
-    image: (root, { id }) => Images.find(i => i.id === id),
+    image: (root, { id }) => Images.find((i) => i.id === id),
 
     authors: () => Authors,
-    author: (root, { id }) => Authors.find(a => a.id === id),
+    author: (root, { id }) => Authors.find((a) => a.id === id),
   },
 
   Mutation: {
@@ -65,7 +65,7 @@ const resolvers = {
     },
     imageCreated: {
       subscribe: () => pubsub.asyncIterator('imageCreated'),
-    }
+    },
   },
 };
 

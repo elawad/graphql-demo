@@ -40,13 +40,13 @@ const typeDefs = /* GraphQL */`
   # Mutation Schema
   type Mutation {
     # Create an image
-    addImage (name: String!): Image
+    addImage(name: String!): Image
 
     # Like an image
-    upVote (id: Int!): Image
+    upVote(id: Int!): Image
 
     # Dislike an image
-    downVote (id: Int!): Image
+    downVote(id: Int!): Image
   }
 
   # Subscription Schema

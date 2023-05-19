@@ -15,7 +15,7 @@ const HOST_WS = HOST.replace(/^http/, 'ws');
 
 // Create an http link:
 const httpLink = new HttpLink({
-  uri: `${HOST}/graphql`
+  uri: `${HOST}/graphql`,
 });
 
 // Create a WebSocket link:
@@ -24,7 +24,7 @@ const wsLink = new WebSocketLink({
   options: {
     reconnect: true,
     reconnectionAttempts: 4,
-  }
+  },
 });
 
 // Split based on operation type:
@@ -34,7 +34,7 @@ const link = split(
     return kind === 'OperationDefinition' && operation === 'subscription';
   },
   wsLink,
-  httpLink,
+  httpLink
 );
 
 const client = new ApolloClient({

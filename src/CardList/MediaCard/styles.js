@@ -1,4 +1,4 @@
-export default theme => ({
+export default (theme) => ({
   card: {
     display: 'flex',
     marginTop: theme.spacing.unit * 2,
