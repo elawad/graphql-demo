@@ -10,7 +10,7 @@ import graphQLSchema from './_graphql/schema.js';
 
 const MSG = 'GraphQL Server 🚀';
 const PORT = process.env.PORT || 4000;
-const HOST = process.env.API_URL || `http://localhost:${PORT}`;
+const HOST = process.env.REACT_APP_API_URL || `http://localhost:${PORT}`;
 const HOST_WS = HOST.replace(/^http/, 'ws');
 
 const server = express();
