@@ -1,28 +1,25 @@
-# GraphQL Demo #
+# GraphQL Demo
 
 > Demo app using GraphQL and Apollo.
 
-### Run UI ###
-```
+### Run App
+```bash
+# UI
 yarn
 yarn start
 ```
-
-### Run API ###
-```
+```bash
+# API
 yarn start:api
 ```
 
-### Sites ###
-* [UI Frontend](https://graphql-demo-mu.vercel.app)
-* [GraphQL Server](https://graphql-demo-mu.vercel.app/api/graphiql)
+### Demo
+UI Frontend - [graphql-demo-mu.vercel.app](https://graphql-demo-mu.vercel.app)
+\
+GraphQL Server - [graphql-demo-mu.vercel.app/api/graphiql](https://graphql-demo-mu.vercel.app/api/graphiql)
 
-### Application Stack ###
-###### Server
+### Stack
 * Node w/ Express
-* GraphQL
-
-###### Client
-* Create React App
 * GraphQL w/ Apollo
+* Create React App
 * Material UI
