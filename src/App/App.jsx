@@ -12,16 +12,6 @@ const App = () => (
       <h2>GraphQL Demo</h2>
     </div>
 
-    {/*
-    // <p className="App-intro">
-    //   Totals { selectedValue }
-    // </p>
-    //
-    // <Button raised color="primary" onClick={this.handleClick}>
-    //   Primary
-    // </Button>
-    */}
-
     <Container />
   </div>
 );
