@@ -51,7 +51,7 @@ CardDetails.propTypes = {
   isLoaded: PropTypes.bool.isRequired,
   onLoaded: PropTypes.func.isRequired,
 
-  classes: PropTypes.shape({}).isRequired,
+  classes: PropTypes.object.isRequired,
   fullScreen: PropTypes.bool.isRequired,
 };
 

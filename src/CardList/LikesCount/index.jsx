@@ -10,8 +10,8 @@ class LikesCount extends PureComponent {
     this.state = { diff: 0 };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const diff = nextProps.likes - this.props.likes;
+  componentDidUpdate(prevProps) {
+    const diff = this.props.likes - prevProps.likes;
     if (diff !== 0) this.setState({ diff });
   }
 

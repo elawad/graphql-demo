@@ -1,4 +1,4 @@
-export default (theme) => ({
+const styles = (theme) => ({
   card: {
     display: 'flex',
     marginTop: theme.spacing.unit * 2,
@@ -56,3 +56,5 @@ export default (theme) => ({
   //   width: 38,
   // },
 });
+
+export default styles;

@@ -58,7 +58,7 @@ const MediaCard = (props) => {
 };
 
 MediaCard.propTypes = {
-  classes: PropTypes.shape({}).isRequired,
+  classes: PropTypes.object.isRequired,
   // theme: PropTypes.shape({}).isRequired,
 
   image: PropTypes.shape({

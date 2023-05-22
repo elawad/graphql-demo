@@ -1,4 +1,4 @@
-export default (theme) => ({
+const styles = (theme) => ({
   root: {
     display: 'flex',
     flex: '1 0 auto',
@@ -43,3 +43,5 @@ export default (theme) => ({
     transition: 'opacity 200ms',
   },
 });
+
+export default styles;

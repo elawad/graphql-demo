@@ -32,7 +32,7 @@ const CREATE_SUBSCRIPTION = gql`
 `;
 
 class Container extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const { subscribeToMore } = this.props.data;
 
     subscribeToMore({

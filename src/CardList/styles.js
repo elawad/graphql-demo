@@ -1,4 +1,4 @@
-export default {
+const styles = {
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'space-evenly',
@@ -8,3 +8,5 @@ export default {
   maxWidth: '80em',
   margin: '0 auto',
 };
+
+export default styles;
