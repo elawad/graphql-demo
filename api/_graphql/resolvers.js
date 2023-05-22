@@ -26,17 +26,17 @@ const resolvers = {
   Mutation: {
     addImage: async (root, { name }) => {
       const image = await imageCreate(name);
-      pubsub.publish('imageCreated', { imageCreated: image, id: image.id });
+      pubsub.publish('imageCreated', { imageCreated: image });
       return image;
     },
     upVote: (root, { id }) => {
       const image = imageVote(id, +1);
-      pubsub.publish('voteChanged', { voteChanged: image, id: image.id });
+      pubsub.publish('voteChanged', { voteChanged: image });
       return image;
     },
     downVote: (root, { id }) => {
       const image = imageVote(id, -1);
-      pubsub.publish('voteChanged', { voteChanged: image, id: image.id });
+      pubsub.publish('voteChanged', { voteChanged: image });
       return image;
     },
   },

@@ -41,12 +41,11 @@ class Container extends Component {
         if (!subscriptionData.voteChanged) return prev;
 
         // Find/update image with new votes
-        const newVote = subscriptionData.voteChanged;
-        const { likes, id } = newVote;
-        const images = [...prev.images];
-        const i = images.findIndex((image) => image.id === id);
-        const image = { ...images[i], likes };
-        images[i] = image;
+        const { id, likes } = subscriptionData.voteChanged;
+        const images = prev.images.map(image => {
+          if (image.id !== id) return image;
+          return { ...image, likes };
+        });
         return { ...prev, images };
       },
     });
