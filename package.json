@@ -11,7 +11,6 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "lint": "eslint --fix src api",
     "serve": "serve -s build"
   },
@@ -27,14 +26,18 @@
     "material-ui": "1.0.0-beta.23",
     "material-ui-icons": "1.0.0-beta.17",
     "prop-types": "15.6.0",
-    "react": "16.0.0",
+    "react": "16.10.0",
     "react-animate-on-change": "1.0.1",
     "react-apollo": "2.0.0",
-    "react-dom": "16.0.0"
+    "react-dom": "16.10.0"
   },
   "devDependencies": {
-    "react-scripts": "3.0.1",
+    "react-scripts": "4.0.3",
     "serve": "14.2.0"
+  },
+  "resolutions": {
+    "//": "See https://github.com/facebook/create-react-app/issues/11773",
+    "react-error-overlay": "6.0.9"
   },
   "browserslist": {
     "production": [
